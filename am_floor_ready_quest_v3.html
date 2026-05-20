@@ -1,0 +1,2019 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AM Floor-Ready Quest | DoorDash Movate Training Companion</title>
+  <style>
+    :root{
+      --paper:#f5ead8;
+      --paper-2:#fff8ed;
+      --paper-3:#ead7b7;
+      --ink:#241914;
+      --muted:#725f50;
+      --line:#d8c29e;
+      --accent:#d63518;
+      --accent-dark:#99250f;
+      --accent-soft:#ffe0d4;
+      --teal:#0f7f73;
+      --teal-soft:#d9f0eb;
+      --honey:#d99a2b;
+      --honey-soft:#fff0c9;
+      --sage:#6f8d66;
+      --plum:#6c3555;
+      --plum-soft:#f3deeb;
+      --ok:#207a50;
+      --bad:#9e2a1b;
+      --warn:#a86a07;
+      --shadow: 0 22px 60px rgba(36,25,20,.13);
+      --shadow-soft: 0 12px 34px rgba(36,25,20,.09);
+      --radius: 28px;
+      --radius-sm: 16px;
+      --serif: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --sans: "Avenir Next", Avenir, "Trebuchet MS", Verdana, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12% 6%, rgba(214,53,24,.10), transparent 32rem),
+        radial-gradient(circle at 88% 12%, rgba(15,127,115,.10), transparent 28rem),
+        radial-gradient(circle at 78% 92%, rgba(217,154,43,.12), transparent 30rem),
+        linear-gradient(90deg, rgba(36,25,20,.035) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(36,25,20,.028) 1px, transparent 1px),
+        var(--paper);
+      background-size:auto, auto, auto, 34px 34px, 34px 34px, auto;
+      font-family:var(--serif);
+      line-height:1.62;
+      overflow-x:hidden;
+    }
+
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.34;
+      mix-blend-mode:multiply;
+      background-image:
+        radial-gradient(rgba(36,25,20,.16) .5px, transparent .7px),
+        radial-gradient(rgba(36,25,20,.10) .5px, transparent .7px);
+      background-size:7px 7px, 11px 11px;
+      background-position:0 0, 3px 4px;
+      z-index:-1;
+    }
+
+    ::selection{background:rgba(214,53,24,.22)}
+    p{margin:0 0 1rem}
+    a{color:var(--accent-dark);text-decoration-thickness:.08em;text-underline-offset:.18em}
+    small{font-size:.86rem;color:var(--muted)}
+    button,input,textarea,select{font:inherit}
+    .page{width:min(1240px, calc(100% - 34px));margin:0 auto;padding:34px 0 82px}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(36,25,20,.14);
+      background:
+        linear-gradient(135deg, rgba(255,248,237,.96), rgba(255,248,237,.76)),
+        repeating-linear-gradient(-6deg, rgba(36,25,20,.026) 0 1px, transparent 1px 12px);
+      border-radius:calc(var(--radius) + 12px);
+      box-shadow:var(--shadow);
+      padding:clamp(34px, 6vw, 76px);
+      margin-bottom:22px;
+    }
+    .hero:before{
+      content:"100";
+      position:absolute;
+      right:clamp(10px, 5vw, 54px);
+      bottom:-24px;
+      font:900 clamp(96px, 20vw, 250px)/.75 var(--sans);
+      letter-spacing:-.12em;
+      color:rgba(36,25,20,.055);
+      pointer-events:none;
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      width:360px;height:360px;
+      border-radius:50%;
+      background:rgba(214,53,24,.12);
+      right:-140px;top:-150px;
+      border:1px solid rgba(214,53,24,.25);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      gap:.55rem;
+      align-items:center;
+      border:1px solid rgba(214,53,24,.26);
+      border-radius:999px;
+      padding:.42rem .75rem;
+      background:rgba(255,248,237,.72);
+      color:var(--accent-dark);
+      font:900 .78rem/1 var(--sans);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    .dot{width:.52rem;height:.52rem;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(214,53,24,.12)}
+    h1,h2,h3,h4{font-family:var(--serif);line-height:1.04;margin:0;color:var(--ink)}
+    h1{font-size:clamp(3.1rem, 8.6vw, 8rem);letter-spacing:-.07em;margin-top:1.15rem;max-width:980px}
+    h2{font-size:clamp(2.05rem, 5vw, 4.6rem);letter-spacing:-.052em;margin-bottom:1rem}
+    h3{font-size:clamp(1.5rem, 2.8vw, 2.45rem);letter-spacing:-.035em}
+    h4{font-size:1.14rem;letter-spacing:-.014em}
+    .subtitle{font-size:clamp(1.05rem, 2vw, 1.42rem);color:var(--muted);max-width:880px;margin:1rem 0 0}
+    .hero-grid{display:grid;grid-template-columns:1.22fr .78fr;gap:22px;align-items:end;margin-top:28px;position:relative;z-index:1}
+    .manifesto{
+      border-left:7px solid var(--accent);
+      background:rgba(255,255,255,.35);
+      padding:18px 20px;
+      border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+      box-shadow:0 1px 0 rgba(36,25,20,.08) inset;
+      font-size:1.05rem;
+    }
+    .manifesto strong{color:var(--accent-dark)}
+    .meta-card{
+      border:1px solid rgba(36,25,20,.14);
+      background:rgba(255,248,237,.86);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:var(--shadow-soft);
+    }
+    .meta-row{display:flex;justify-content:space-between;gap:16px;border-bottom:1px dashed var(--line);padding:.55rem 0;font-family:var(--sans);font-size:.92rem}
+    .meta-row:last-child{border-bottom:0}
+    .meta-row b{color:var(--ink)}
+    .meta-row span{color:var(--muted);text-align:right}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      background:rgba(244,234,217,.84);
+      border:1px solid rgba(36,25,20,.12);
+      border-radius:0 0 22px 22px;
+      box-shadow:0 18px 42px rgba(36,25,20,.08);
+      margin:0 auto 24px;
+      padding:10px 12px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+    }
+    .nav{display:flex;gap:8px;overflow:auto;padding-bottom:2px;scrollbar-width:thin}
+    .nav a{
+      flex:0 0 auto;
+      color:var(--ink);
+      text-decoration:none;
+      font:900 .76rem/1 var(--sans);
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      border:1px solid rgba(36,25,20,.15);
+      background:rgba(255,248,237,.62);
+      padding:.62rem .72rem;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    .nav a:hover{border-color:rgba(214,53,24,.42);color:var(--accent-dark)}
+    .status{display:flex;gap:8px;align-items:center;white-space:nowrap;font-family:var(--sans)}
+    .pill{
+      border:1px solid rgba(36,25,20,.14);
+      background:rgba(255,248,237,.7);
+      border-radius:999px;
+      padding:.58rem .72rem;
+      font:900 .78rem/1 var(--sans);
+      color:var(--ink);
+    }
+    .pill strong{color:var(--accent-dark)}
+    .btn{
+      appearance:none;
+      border:1px solid rgba(36,25,20,.14);
+      background:var(--ink);
+      color:var(--paper-2);
+      border-radius:999px;
+      padding:.70rem .95rem;
+      font:900 .82rem/1 var(--sans);
+      letter-spacing:.02em;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(36,25,20,.12);
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.secondary{background:rgba(255,248,237,.74);color:var(--ink)}
+    .btn.accent{background:var(--accent);border-color:var(--accent);color:white}
+    .btn.ghost{box-shadow:none;background:transparent;color:var(--ink)}
+    .btn.small{padding:.52rem .68rem;font-size:.76rem}
+
+    .section{
+      margin:24px 0;
+      padding:clamp(24px, 4vw, 42px);
+      border:1px solid rgba(36,25,20,.12);
+      border-radius:var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,248,237,.90), rgba(255,248,237,.70)),
+        repeating-linear-gradient(90deg, rgba(36,25,20,.023) 0 1px, transparent 1px 16px);
+      box-shadow:var(--shadow-soft);
+    }
+    .section.compact{padding:24px}
+    .section-title{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start;margin-bottom:22px}
+    .section-kicker{font:900 .78rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:.72rem}
+    .section-lede{font-size:1.07rem;color:var(--muted);max-width:870px}
+
+    .grid{display:grid;gap:18px}
+    .grid.two{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .grid.three{grid-template-columns:repeat(3, minmax(0,1fr))}
+    .grid.four{grid-template-columns:repeat(4, minmax(0,1fr))}
+    .card{
+      border:1px solid rgba(36,25,20,.13);
+      border-radius:var(--radius-sm);
+      background:rgba(255,248,237,.76);
+      padding:18px;
+      box-shadow:0 8px 24px rgba(36,25,20,.06);
+    }
+    .card h4{margin-bottom:.55rem}
+    .card p{color:var(--muted);font-size:.98rem}
+    .tag{
+      display:inline-flex;align-items:center;gap:.42rem;
+      border:1px solid rgba(36,25,20,.13);
+      border-radius:999px;
+      padding:.32rem .58rem;
+      font:900 .70rem/1 var(--sans);
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      color:var(--muted);
+      background:rgba(255,255,255,.33);
+      margin:.15rem .2rem .15rem 0;
+    }
+    .tag.red{color:var(--accent-dark);background:var(--accent-soft);border-color:rgba(214,53,24,.22)}
+    .tag.teal{color:#07584f;background:var(--teal-soft);border-color:rgba(15,127,115,.22)}
+    .tag.honey{color:#7b4d05;background:var(--honey-soft);border-color:rgba(217,154,43,.24)}
+    .tag.plum{color:#53243f;background:var(--plum-soft);border-color:rgba(108,53,85,.22)}
+    .mini{font:900 .76rem/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+    .notice{
+      border:1px dashed rgba(36,25,20,.22);
+      border-radius:var(--radius-sm);
+      padding:16px 18px;
+      background:rgba(255,255,255,.32);
+      color:var(--muted);
+    }
+    .pull{
+      font-size:clamp(1.35rem,3vw,2.25rem);
+      line-height:1.12;
+      letter-spacing:-.04em;
+      border-left:8px solid var(--accent);
+      padding:10px 0 10px 20px;
+      margin:20px 0;
+      max-width:900px;
+    }
+
+    .meter-wrap{display:grid;gap:10px;margin-top:16px}
+    .meter-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--sans);font-weight:900;font-size:.86rem;color:var(--muted)}
+    .meter{
+      height:17px;
+      border:1px solid rgba(36,25,20,.16);
+      border-radius:999px;
+      overflow:hidden;
+      background:rgba(36,25,20,.07);
+    }
+    .meter span{
+      display:block;height:100%;width:0%;
+      background:linear-gradient(90deg, var(--accent), var(--honey));
+      border-radius:999px;
+      transition:width .35s ease;
+    }
+
+    .roadmap{
+      display:grid;
+      grid-template-columns:repeat(5, minmax(0,1fr));
+      gap:12px;
+      margin-top:20px;
+    }
+    .stage{
+      position:relative;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:20px;
+      padding:18px;
+      background:rgba(255,248,237,.74);
+      min-height:170px;
+      overflow:hidden;
+    }
+    .stage:before{
+      content:attr(data-step);
+      position:absolute;
+      right:10px;bottom:-18px;
+      font:900 66px/.8 var(--sans);
+      color:rgba(36,25,20,.06);
+    }
+    .stage b{font-family:var(--sans);color:var(--accent-dark);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase}
+    .stage h4{margin:.35rem 0 .5rem}
+    .stage p{font-size:.92rem;color:var(--muted);position:relative;z-index:1}
+
+    .input-row{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:12px;margin-top:14px}
+    label.field{display:grid;gap:6px;font-family:var(--sans);font-size:.82rem;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    input[type="text"], textarea, select{
+      width:100%;
+      border:1px solid rgba(36,25,20,.18);
+      border-radius:14px;
+      background:rgba(255,248,237,.82);
+      color:var(--ink);
+      padding:.85rem .9rem;
+      outline:none;
+      box-shadow:0 1px 0 rgba(255,255,255,.4) inset;
+    }
+    textarea{min-height:110px;resize:vertical;text-transform:none;letter-spacing:normal;font-family:var(--sans);line-height:1.45}
+    select{cursor:pointer}
+
+    .flip-grid{display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:14px}
+    .flip-card{
+      min-height:188px;
+      perspective:1000px;
+      cursor:pointer;
+      outline:none;
+    }
+    .flip-inner{
+      position:relative;
+      width:100%;height:100%;
+      min-height:188px;
+      transition:transform .55s ease;
+      transform-style:preserve-3d;
+    }
+    .flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+    .flip-front,.flip-back{
+      position:absolute;inset:0;
+      backface-visibility:hidden;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:20px;
+      padding:18px;
+      background:rgba(255,248,237,.82);
+      box-shadow:0 10px 22px rgba(36,25,20,.07);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .flip-front{background:linear-gradient(145deg, rgba(255,248,237,.92), rgba(255,224,212,.55))}
+    .flip-back{
+      transform:rotateY(180deg);
+      background:linear-gradient(145deg, rgba(255,248,237,.95), rgba(217,154,43,.14));
+    }
+    .flip-front strong{font-size:1.3rem;line-height:1.1}
+    .flip-back p{font-size:.95rem;color:var(--muted)}
+    .corner{
+      align-self:flex-start;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:999px;
+      padding:.22rem .48rem;
+      font:900 .68rem/1 var(--sans);
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      color:var(--accent-dark);
+      background:rgba(255,255,255,.38);
+    }
+
+    .memory-board{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+    .mem-card{
+      min-height:94px;
+      border:1px solid rgba(36,25,20,.15);
+      border-radius:18px;
+      background:var(--ink);
+      color:var(--paper-2);
+      cursor:pointer;
+      padding:12px;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      font:900 .88rem/1.2 var(--sans);
+      transition:.2s ease;
+      user-select:none;
+    }
+    .mem-card.revealed,.mem-card.matched{
+      background:rgba(255,248,237,.86);
+      color:var(--ink);
+      transform:translateY(-2px);
+    }
+    .mem-card.matched{
+      border-color:rgba(32,122,80,.45);
+      background:rgba(217,240,235,.88);
+      color:#064d45;
+      cursor:default;
+    }
+    .game-status{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px;
+      font-family:var(--sans);font-weight:900;color:var(--muted)
+    }
+
+    .quiz-shell{
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:24px;
+      padding:20px;
+      background:
+        linear-gradient(135deg, rgba(255,248,237,.92), rgba(255,224,212,.42)),
+        repeating-linear-gradient(0deg, rgba(36,25,20,.025) 0 1px, transparent 1px 14px);
+    }
+    .quiz-top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:14px;font-family:var(--sans);font-weight:900;color:var(--muted)}
+    .quiz-q{font-size:clamp(1.35rem,3vw,2.35rem);line-height:1.12;letter-spacing:-.04em;margin-bottom:14px}
+    .answers{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:12px}
+    .answer{
+      border:1px solid rgba(36,25,20,.15);
+      border-radius:18px;
+      padding:16px;
+      background:rgba(255,248,237,.84);
+      cursor:pointer;
+      text-align:left;
+      transition:.18s ease;
+      min-height:82px;
+      font-family:var(--sans);
+      color:var(--ink);
+    }
+    .answer:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(36,25,20,.08)}
+    .answer.correct{background:rgba(217,240,235,.95);border-color:rgba(32,122,80,.5)}
+    .answer.wrong{background:rgba(255,224,212,.92);border-color:rgba(158,42,27,.45)}
+    .feedback{
+      margin-top:14px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.38);
+      border:1px dashed rgba(36,25,20,.18);
+      color:var(--muted);
+      display:none;
+    }
+
+    .dojo-row{
+      display:grid;
+      grid-template-columns:1fr 1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:14px 0;
+      border-bottom:1px dashed var(--line);
+    }
+    .dojo-row:last-child{border-bottom:0}
+    .rejection{
+      font-size:1.02rem;
+      color:var(--ink);
+    }
+    .result-dot{
+      width:34px;height:34px;border-radius:50%;
+      display:grid;place-items:center;
+      font:900 .9rem/1 var(--sans);
+      background:rgba(36,25,20,.08);
+      color:var(--muted);
+    }
+    .result-dot.ok{background:rgba(217,240,235,.95);color:var(--ok)}
+    .result-dot.bad{background:rgba(255,224,212,.92);color:var(--bad)}
+
+    .case-grid{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:14px}
+    .scenario-card{
+      min-height:260px;
+      perspective:1100px;
+      cursor:pointer;
+      outline:none;
+    }
+    .scenario-inner{position:relative;min-height:260px;transform-style:preserve-3d;transition:transform .55s ease}
+    .scenario-card.flipped .scenario-inner{transform:rotateY(180deg)}
+    .scenario-front,.scenario-back{
+      position:absolute;inset:0;backface-visibility:hidden;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:22px;
+      padding:18px;
+      background:rgba(255,248,237,.84);
+      box-shadow:0 10px 24px rgba(36,25,20,.07);
+      overflow:auto;
+    }
+    .scenario-front{background:linear-gradient(145deg, rgba(255,248,237,.94), rgba(217,154,43,.17))}
+    .scenario-back{transform:rotateY(180deg);background:linear-gradient(145deg, rgba(255,248,237,.96), rgba(15,127,115,.13))}
+    .restaurant{font-size:1.42rem;letter-spacing:-.04em;line-height:1.05;margin:.4rem 0}
+    .facts{display:grid;gap:7px;margin-top:12px}
+    .fact{display:flex;gap:8px;align-items:flex-start;color:var(--muted);font-size:.92rem}
+    .fact b{color:var(--ink)}
+    .score-chip{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-width:42px;height:42px;border-radius:50%;
+      background:var(--accent);color:white;
+      font:900 1rem/1 var(--sans);
+      box-shadow:0 8px 20px rgba(214,53,24,.2);
+    }
+
+    .builder-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:18px}
+    .choice-stack{display:grid;gap:12px}
+    .recommendation{
+      min-height:250px;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:22px;
+      padding:20px;
+      background:
+        linear-gradient(135deg, rgba(255,248,237,.96), rgba(217,240,235,.6)),
+        repeating-linear-gradient(90deg, rgba(36,25,20,.022) 0 1px, transparent 1px 14px);
+    }
+    .rec-title{font-size:1.9rem;line-height:1.05;letter-spacing:-.04em;margin:.4rem 0}
+    .rec-list{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+    .rec-list li{display:flex;gap:8px;color:var(--muted)}
+    .rec-list li:before{content:"→";color:var(--accent-dark);font-weight:900}
+
+    .flow-list{display:grid;gap:10px;margin-top:16px}
+    .flow-step{
+      display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:18px;
+      padding:12px 14px;
+      background:rgba(255,248,237,.78);
+    }
+    .flow-num{
+      width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+      background:rgba(214,53,24,.12);color:var(--accent-dark);
+      font:900 .84rem/1 var(--sans);
+    }
+    .flow-actions{display:flex;gap:5px}
+    .icon-btn{
+      width:34px;height:34px;border-radius:50%;
+      border:1px solid rgba(36,25,20,.15);
+      background:rgba(255,255,255,.35);
+      cursor:pointer;
+      display:grid;place-items:center;
+      font-weight:900;
+    }
+
+    .roleplay-shell{
+      display:grid;
+      grid-template-columns:.85fr 1.15fr;
+      gap:18px;
+    }
+    .merchant-bubble{
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:24px 24px 24px 6px;
+      padding:20px;
+      background:rgba(255,248,237,.88);
+      box-shadow:0 10px 22px rgba(36,25,20,.07);
+      font-size:1.15rem;
+    }
+    .response-options{display:grid;gap:10px;margin-top:14px}
+    .response-btn{
+      border:1px solid rgba(36,25,20,.15);
+      border-radius:18px;
+      padding:14px;
+      text-align:left;
+      background:rgba(255,248,237,.8);
+      cursor:pointer;
+      font-family:var(--sans);
+      transition:.18s ease;
+    }
+    .response-btn:hover{transform:translateY(-1px)}
+    .response-btn.best{background:rgba(217,240,235,.95);border-color:rgba(32,122,80,.45)}
+    .response-btn.miss{background:rgba(255,224,212,.92);border-color:rgba(158,42,27,.4)}
+
+    .slider-grid{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:14px}
+    .slider-card{
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:18px;
+      padding:15px;
+      background:rgba(255,248,237,.80);
+    }
+    .slider-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--sans);font-weight:900;margin-bottom:8px}
+    input[type="range"]{width:100%;accent-color:var(--accent)}
+    .score-output{
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:24px;
+      padding:22px;
+      background:linear-gradient(145deg, rgba(255,248,237,.95), rgba(255,224,212,.48));
+      position:sticky;
+      top:96px;
+    }
+    .big-score{font:900 clamp(3.2rem,8vw,5.5rem)/.8 var(--sans);letter-spacing:-.08em;color:var(--accent-dark)}
+    .priority-list{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+    .priority-list li{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.38);border:1px dashed rgba(36,25,20,.14);color:var(--muted)}
+    .priority-list b{color:var(--ink)}
+
+    .check-grid{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:12px}
+    .check-item{
+      display:flex;gap:10px;align-items:flex-start;
+      border:1px solid rgba(36,25,20,.13);
+      border-radius:16px;
+      padding:12px;
+      background:rgba(255,248,237,.76);
+      font-family:var(--sans);
+      color:var(--muted);
+    }
+    .check-item input{width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto;margin-top:2px}
+    .check-item strong{color:var(--ink)}
+
+    .badge-wall{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .badge{
+      display:inline-flex;gap:8px;align-items:center;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:999px;
+      padding:.58rem .78rem;
+      background:rgba(255,255,255,.36);
+      font:900 .78rem/1 var(--sans);
+      color:var(--muted);
+      opacity:.45;
+      filter:grayscale(1);
+    }
+    .badge.unlocked{opacity:1;filter:none;background:rgba(255,248,237,.84);color:var(--ink);box-shadow:0 8px 16px rgba(36,25,20,.06)}
+    .badge span:first-child{font-size:1.1rem}
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%) translateY(18px);
+      opacity:0;
+      pointer-events:none;
+      background:var(--ink);
+      color:var(--paper-2);
+      border-radius:999px;
+      padding:.78rem 1rem;
+      z-index:50;
+      font:900 .86rem/1 var(--sans);
+      box-shadow:0 16px 40px rgba(36,25,20,.22);
+      transition:.25s ease;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    .modal{
+      position:fixed;inset:0;z-index:60;
+      display:none;place-items:center;
+      background:rgba(36,25,20,.34);
+      padding:20px;
+    }
+    .modal.open{display:grid}
+    .modal-box{
+      width:min(720px,100%);
+      border:1px solid rgba(36,25,20,.18);
+      border-radius:28px;
+      background:var(--paper-2);
+      padding:26px;
+      box-shadow:var(--shadow);
+    }
+
+    .print-note{display:none}
+    footer{margin-top:28px;color:var(--muted);font-size:.94rem;text-align:center}
+
+    @media (max-width: 980px){
+      .hero-grid,.builder-grid,.roleplay-shell{grid-template-columns:1fr}
+      .grid.three,.grid.four,.flip-grid,.case-grid,.roadmap{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .slider-grid,.check-grid{grid-template-columns:1fr}
+      .score-output{position:static}
+      .topbar{grid-template-columns:1fr}
+      .status{overflow:auto}
+    }
+    @media (max-width: 640px){
+      .page{width:min(100% - 22px, 1240px);padding-top:18px}
+      .hero{padding:28px}
+      .grid.two,.grid.three,.grid.four,.flip-grid,.case-grid,.roadmap,.answers,.input-row,.memory-board{grid-template-columns:1fr}
+      .dojo-row{grid-template-columns:1fr}
+      .result-dot{display:none}
+      .section-title{grid-template-columns:1fr}
+      .status{display:grid;grid-template-columns:repeat(2, minmax(0,1fr))}
+      .status .btn{grid-column:1/-1}
+    }
+    @media print{
+      body{background:white;color:#111}
+      body:before,.topbar,.btn,.toast,.modal{display:none!important}
+      .page{width:100%;padding:0}
+      .section,.hero,.card{box-shadow:none;break-inside:avoid}
+      .print-note{display:block}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero" id="home">
+      <span class="eyebrow"><span class="dot"></span> AM Floor-Ready Quest</span>
+      <h1>De onboarding a floor-ready.</h1>
+      <p class="subtitle">Un laboratorio interactivo para que nuevos Account Managers practiquen herramientas, diagnóstico, discovery, campañas, objections y QA antes de entrar al floor.</p>
+      <div class="hero-grid">
+        <div class="manifesto">
+          <strong>Propósito:</strong> no memorizar el playbook; convertirlo en criterio. Cada juego obliga al AM a decidir qué mirar, qué preguntar, qué recomendar, qué escalar y cómo cerrar el siguiente paso con un merchant ficticio.
+        </div>
+        <div class="meta-card">
+          <div class="meta-row"><b>Audiencia</b><span>Nuevos Account Managers</span></div>
+          <div class="meta-row"><b>Modo</b><span>Práctica autónoma + coaching TL</span></div>
+          <div class="meta-row"><b>Datos</b><span>100% ejemplos ficticios</span></div>
+          <div class="meta-row"><b>Resultado</b><span>Readiness score + plan personal</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="topbar">
+      <nav class="nav" aria-label="Navegación">
+        <a href="#start">Inicio</a>
+        <a href="#roadmap">Ruta</a>
+        <a href="#cards">Flashcards</a>
+        <a href="#memory">Memoria</a>
+        <a href="#quiz">Sprint Quiz</a>
+        <a href="#dojo">Rejections</a>
+        <a href="#cases">Score Cards</a>
+        <a href="#campaign">Campaign Lab</a>
+        <a href="#flow">Call Flow</a>
+        <a href="#roleplay">Roleplay</a>
+        <a href="#scorecard">Readiness</a>
+        <a href="#export">Export</a>
+      </nav>
+      <div class="status">
+        <span class="pill">XP <strong id="xpStat">0</strong></span>
+        <span class="pill">Nivel <strong id="levelStat">Rookie</strong></span>
+        <span class="pill">Readiness <strong id="readyStat">0%</strong></span>
+        <button class="btn small secondary" id="printBtn">Imprimir / PDF</button>
+      </div>
+    </div>
+
+    <main>
+      <section class="section" id="start">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Cómo usarlo</div>
+            <h2>Esto es práctica, no teoría decorada.</h2>
+            <p class="section-lede">El AM avanza por misiones. Cada misión deja evidencia: decisiones correctas, áreas flojas, notas de roleplay y un resumen para compartir con el TL. La herramienta guarda progreso en este navegador.</p>
+          </div>
+          <button class="btn accent" id="saveProfile">Guardar perfil</button>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <h3>Para el AM</h3>
+            <p>Hacé los juegos sin mirar la respuesta primero. Después revisá el feedback y repetí los módulos donde falles. La meta no es “pasar”, es entender qué acción elegir cuando el merchant no sigue el guion ideal.</p>
+            <div class="input-row">
+              <label class="field">Nombre AM
+                <input type="text" id="amName" placeholder="Ej. Andrea" />
+              </label>
+              <label class="field">Cohort / Semana
+                <input type="text" id="cohort" placeholder="Ej. Training Week 1" />
+              </label>
+              <label class="field">Meta personal
+                <input type="text" id="personalGoal" placeholder="Ej. mejorar objection handling" />
+              </label>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Para el TL / Coach</h3>
+            <p>La lectura del resultado debe ser individual. Dos AMs pueden tener el mismo score y necesitar coaching distinto: uno puede fallar por navegación de herramientas; otro por hablar demasiado y hacer poco discovery.</p>
+            <div class="notice">
+              Regla de oro: usar esta herramienta como diagnóstico formativo, no como castigo. El score abre conversación; no reemplaza QA, shadowing ni feedback de llamadas reales.
+            </div>
+          </div>
+        </div>
+
+        <div class="meter-wrap">
+          <div class="meter-head"><span>Progreso general del laboratorio</span><span id="progressText">0%</span></div>
+          <div class="meter"><span id="progressBar"></span></div>
+        </div>
+
+        <div class="badge-wall" id="badgeWall" aria-label="Badges de progreso"></div>
+      </section>
+
+      <section class="section" id="roadmap">
+        <div class="section-kicker">Ruta 0-100</div>
+        <h2>La curva de readiness del AM.</h2>
+        <p class="section-lede">La secuencia está diseñada para ir de “sé dónde hacer clic” a “puedo diagnosticar un merchant, sostener una conversación consultiva y defender una recomendación con datos”.</p>
+
+        <div class="roadmap">
+          <div class="stage" data-step="0">
+            <b>0-20</b>
+            <h4>Toolbelt</h4>
+            <p>Reconocer cuándo usar Merchant Portal, SFDC, DDMx, Dime, Mint/Figment, Outreach y Slack.</p>
+          </div>
+          <div class="stage" data-step="20">
+            <b>20-40</b>
+            <h4>Merchant diagnosis</h4>
+            <p>Leer Product Mix, Operation Quality, Customer Insights, photos, ratings, sales trends y campaign reporting.</p>
+          </div>
+          <div class="stage" data-step="40">
+            <b>40-60</b>
+            <h4>Consultative call</h4>
+            <p>Abrir con valor, pedir permiso, hacer discovery, usar SPIN y confirmar next steps.</p>
+          </div>
+          <div class="stage" data-step="60">
+            <b>60-80</b>
+            <h4>Growth levers</h4>
+            <p>Elegir entre photos, descriptions, Sponsored Listings, promos, Smart Campaigns, Loyalty y dayparting.</p>
+          </div>
+          <div class="stage" data-step="80">
+            <b>80-100</b>
+            <h4>Floor simulation</h4>
+            <p>Resolver escenarios con objeciones, soporte, campañas y cierre sin romper QA ni confianza.</p>
+          </div>
+        </div>
+
+        <p class="pull">Un AM floor-ready no recita features: conecta una señal del negocio con una acción concreta y un next step claro.</p>
+      </section>
+
+      <section class="section" id="cards">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Juego 1</div>
+            <h2>Flashcards que se voltean.</h2>
+            <p class="section-lede">Conceptos base con nombre original y traducción práctica. Tocá cada tarjeta para ver cómo usarlo en llamada.</p>
+          </div>
+          <button class="btn secondary" id="flipAllBtn">Voltear todas</button>
+        </div>
+
+        <div class="flip-grid" id="conceptDeck"></div>
+      </section>
+
+      <section class="section" id="memory">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Juego 2</div>
+            <h2>Memoria: herramienta correcta, uso correcto.</h2>
+            <p class="section-lede">El objetivo es automatizar el mapa mental de recursos. No todo se resuelve con el mismo sistema ni con el mismo tipo de caso.</p>
+          </div>
+          <button class="btn accent" id="newMemory">Nuevo tablero</button>
+        </div>
+        <div class="game-status">
+          <span class="tag red">Matches: <b id="memoryMatches">0</b>/8</span>
+          <span class="tag teal">Intentos: <b id="memoryMoves">0</b></span>
+          <span class="tag honey">Bonus al completar</span>
+        </div>
+        <div class="memory-board" id="memoryBoard"></div>
+      </section>
+
+      <section class="section" id="quiz">
+        <div class="section-kicker">Juego 3</div>
+        <h2>Sprint Quiz tipo Kahoot.</h2>
+        <p class="section-lede">Preguntas rápidas sobre training week, playbook y campañas. La respuesta correcta importa, pero el feedback importa más.</p>
+
+        <div class="quiz-shell">
+          <div class="quiz-top">
+            <span id="quizCounter">Pregunta 1/1</span>
+            <span>Score: <b id="quizScore">0</b></span>
+          </div>
+          <div class="quiz-q" id="quizQuestion"></div>
+          <div class="answers" id="quizAnswers"></div>
+          <div class="feedback" id="quizFeedback"></div>
+          <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+            <button class="btn accent" id="nextQuiz">Siguiente</button>
+            <button class="btn secondary" id="restartQuiz">Reiniciar quiz</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="dojo">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Juego 4</div>
+            <h2>Rejection Dojo: objeción vs acción recomendada.</h2>
+            <p class="section-lede">El AM practica la diferencia entre reaccionar, presionar y consultar. Una buena respuesta valida la preocupación, vuelve al dato y propone un micro-siguiente paso.</p>
+          </div>
+          <button class="btn accent" id="checkDojo">Revisar respuestas</button>
+        </div>
+
+        <div class="card">
+          <div id="dojoRows"></div>
+          <div class="feedback" id="dojoFeedback"></div>
+        </div>
+      </section>
+
+      <section class="section" id="cases">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Juego 5</div>
+            <h2>Score cards que se voltean.</h2>
+            <p class="section-lede">Cada restaurante es ficticio. Primero diagnosticá mentalmente. Después volteá la tarjeta y compará tu enfoque con una respuesta floor-ready.</p>
+          </div>
+          <button class="btn secondary" id="shuffleCases">Mezclar casos</button>
+        </div>
+        <div class="case-grid" id="caseGrid"></div>
+      </section>
+
+      <section class="section" id="campaign">
+        <div class="section-kicker">Juego 6</div>
+        <h2>Campaign Lab: elegí la palanca correcta.</h2>
+        <p class="section-lede">No todas las campañas resuelven el mismo problema. Este laboratorio fuerza al AM a diferenciar adquisición, retención, AOV, visibilidad, conversión y capacidad operativa.</p>
+
+        <div class="builder-grid">
+          <div class="card choice-stack">
+            <label class="field">Objetivo principal del merchant
+              <select id="campaignGoal">
+                <option value="new">Conseguir nuevos clientes</option>
+                <option value="repeat">Traer clientes de vuelta / repeat orders</option>
+                <option value="aov">Subir average ticket size</option>
+                <option value="visibility">Mejorar visibilidad</option>
+                <option value="slow">Activar horas lentas</option>
+                <option value="conversion">Convertir mejor el tráfico actual</option>
+              </select>
+            </label>
+            <label class="field">Contexto
+              <select id="campaignContext">
+                <option value="missingPhotos">El menú tiene muchas fotos faltantes</option>
+                <option value="dashpass">El store está en DashPass / plan Plus o Premier</option>
+                <option value="busyDinner">Cena está saturada, lunch está lento</option>
+                <option value="budgetConcern">El merchant tiene preocupación por costo</option>
+                <option value="greatReviews">Buenas reviews, poca exposición</option>
+                <option value="lowOps">Operation Quality muestra fricciones</option>
+              </select>
+            </label>
+            <label class="field">Tipo de merchant ficticio
+              <select id="campaignMerchant">
+                <option>Maple Arepa House</option>
+                <option>Casa Verde Taqueria</option>
+                <option>Prairie Noodle Bar</option>
+                <option>North Shore Burgers</option>
+                <option>Sunrise Bagel Co.</option>
+                <option>Lotus Bowl Express</option>
+              </select>
+            </label>
+            <button class="btn accent" id="buildCampaign">Generar recomendación</button>
+          </div>
+          <div class="recommendation" id="campaignRec">
+            <span class="tag red">Recomendación</span>
+            <div class="rec-title">Seleccioná objetivo y contexto.</div>
+            <p>El resultado te dará una recomendación, la razón, un riesgo a validar y una pregunta de discovery.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="flow">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Juego 7</div>
+            <h2>Call Flow Builder.</h2>
+            <p class="section-lede">Ordená los pasos de una llamada consultiva. Esto entrena estructura: no vender antes de descubrir, no cerrar sin next step y no olvidar QA basics.</p>
+          </div>
+          <button class="btn accent" id="checkFlow">Revisar orden</button>
+        </div>
+        <div class="notice">Usá las flechas para mover pasos. En mobile funciona mejor que drag-and-drop.</div>
+        <div class="flow-list" id="flowList"></div>
+        <div class="feedback" id="flowFeedback"></div>
+      </section>
+
+      <section class="section" id="roleplay">
+        <div class="section-kicker">Juego 8</div>
+        <h2>Mini roleplay: elegí la respuesta del AM.</h2>
+        <p class="section-lede">Este módulo simula momentos de llamada. La respuesta correcta no es la más “bonita”; es la que combina confianza, discovery, dato y siguiente acción.</p>
+
+        <div class="roleplay-shell">
+          <div class="card">
+            <label class="field">Escenario
+              <select id="roleplaySelect"></select>
+            </label>
+            <div style="margin-top:14px">
+              <span class="tag teal" id="roleplayTopic">Topic</span>
+              <span class="tag honey" id="roleplayDifficulty">Difficulty</span>
+            </div>
+          </div>
+          <div>
+            <div class="merchant-bubble" id="merchantLine"></div>
+            <div class="response-options" id="responseOptions"></div>
+            <div class="feedback" id="roleplayFeedback"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="scorecard">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Readiness scorecard</div>
+            <h2>Mapa individual de coaching.</h2>
+            <p class="section-lede">El AM se autoevalúa. El TL puede comparar este mapa con QA, shadowing y resultados reales. Lo importante no es el promedio: son los dos puntos más bajos.</p>
+          </div>
+          <button class="btn secondary" id="resetSliders">Reset sliders</button>
+        </div>
+
+        <div class="builder-grid">
+          <div class="slider-grid" id="sliderGrid"></div>
+          <div class="score-output">
+            <span class="tag red">Floor readiness</span>
+            <div class="big-score"><span id="readinessScore">0</span>%</div>
+            <p id="readinessText">Mové los sliders para ver tu diagnóstico.</p>
+            <ul class="priority-list" id="priorityList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="weekplan">
+        <div class="section-kicker">Plan de práctica</div>
+        <h2>Checklist 0-100 antes de entrar al floor.</h2>
+        <p class="section-lede">No es un plan de lectura. Es un plan de evidencia: cada check debe poder demostrarse en shadowing, roleplay o una conversación real.</p>
+
+        <div class="grid two">
+          <div class="card">
+            <h3>Semana de training: base</h3>
+            <div class="check-grid">
+              <label class="check-item"><input type="checkbox" data-check="w1_tools"><span><strong>Tool map:</strong> puedo explicar para qué uso Merchant Portal, SFDC, DDMx, Dime, Mint/Figment, Outreach y Slack.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w1_levels"><span><strong>Business vs Store level:</strong> sé cuándo una acción vive a nivel negocio y cuándo a nivel tienda.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w1_research"><span><strong>2-3 min pre-call:</strong> armo una agenda sin perderme investigando de más.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w1_metrics"><span><strong>Signals:</strong> leo Product Mix, Operation Quality, Customer Insights, Campaign Reporting y ratings.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w1_photos"><span><strong>Photo path:</strong> sé orientar photoshoot, photo processing o carga DIY según el caso.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w1_call"><span><strong>Opening:</strong> puedo abrir llamada con recorded line, valor y permiso sin sonar robótico.</span></label>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Semana de nesting: piso</h3>
+            <div class="check-grid">
+              <label class="check-item"><input type="checkbox" data-check="w2_spin"><span><strong>Discovery:</strong> hago preguntas SPIN antes de recomendar.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w2_campaigns"><span><strong>Campaign fit:</strong> diferencio Sponsored Listings, Promos, Smart Campaigns, Loyalty y dayparting.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w2_reject"><span><strong>Objections:</strong> respondo costo, competencia y desconfianza sin empujar de más.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w2_qa"><span><strong>QA basics:</strong> evito errores críticos, confirmo next steps y registro notas.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w2_pipeline"><span><strong>Pipeline hygiene:</strong> dejo follow-up accionable y no dependo de memoria.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w2_mock"><span><strong>Mock call:</strong> completé un roleplay de 10 minutos con feedback TL/SME.</span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="export">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Handoff</div>
+            <h2>Resumen para compartir con el TL.</h2>
+            <p class="section-lede">El AM puede copiar este resumen después de practicar. Le da al TL una entrada directa para coaching personalizado.</p>
+          </div>
+          <button class="btn accent" id="generateReport">Generar resumen</button>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <label class="field">Mi mayor fortaleza observada
+              <textarea id="strengthNote" placeholder="Ej. Puedo conectar Product Mix con recomendaciones de AOV."></textarea>
+            </label>
+            <label class="field" style="margin-top:12px">Mi mayor fricción / tema para coaching
+              <textarea id="frictionNote" placeholder="Ej. Me cuesta responder objeciones de costo sin sonar defensivo."></textarea>
+            </label>
+            <label class="field" style="margin-top:12px">Próxima acción que voy a practicar
+              <textarea id="nextActionNote" placeholder="Ej. Haré 3 roleplays usando SPIN + Feel-Felt-Found."></textarea>
+            </label>
+          </div>
+          <div class="card">
+            <label class="field">Resumen generado
+              <textarea id="reportBox" placeholder="Tu reporte aparecerá aquí."></textarea>
+            </label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+              <button class="btn secondary" id="copyReport">Copiar resumen</button>
+              <button class="btn ghost" id="resetAll">Reset completo</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Training companion interno con ejemplos ficticios. Usar junto con el playbook oficial, QA, shadowing y lineamientos actualizados del programa.
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">+XP</div>
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <h3 id="modalTitle">Título</h3>
+      <p id="modalBody">Mensaje</p>
+      <button class="btn accent" id="closeModal">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    const LS_KEY = "amFloorReadyQuest.v1";
+
+    const badges = [
+      {id:"tool", icon:"🧭", label:"Tool Navigator", min:80},
+      {id:"research", icon:"🔎", label:"Merchant Detective", min:180},
+      {id:"discovery", icon:"🎙️", label:"Discovery Pilot", min:320},
+      {id:"campaign", icon:"📈", label:"Campaign Architect", min:500},
+      {id:"objection", icon:"🥋", label:"Rejection Dojo", min:700},
+      {id:"floor", icon:"🏁", label:"Floor Ready", min:900}
+    ];
+
+    const conceptCards = [
+      {front:"Business Level", sub:"Nivel negocio", back:"Usalo para entender estructura, ownership, package/plan, permisos y acciones que impactan varias tiendas. Pregunta clave: ¿quién decide por este Business ID?"},
+      {front:"Store Level", sub:"Nivel tienda", back:"Usalo para casos o cambios específicos de una tienda: fotos, horarios, availability, operation quality, ratings, product mix y detalles de menú."},
+      {front:"Product Mix", sub:"Mezcla de productos", back:"Te muestra qué items venden más. Sirve para recomendar fotos, descripciones, bundles, add-ons o promociones sobre platos con tracción."},
+      {front:"Operation Quality", sub:"Calidad operativa", back:"Señal de experiencia del cliente. Antes de empujar más demanda, revisá cancelaciones, missing items, prep time o fricciones operativas."},
+      {front:"Sponsored Listings", sub:"Anuncios", back:"Palanca de visibilidad. Útil cuando el merchant tiene buen producto, necesita aparecer más y puede convertir tráfico en órdenes."},
+      {front:"Smart Campaigns", sub:"Campañas inteligentes", back:"Promos con targeting y ajustes más automatizados. Buen punto cuando el merchant quiere simplicidad y resultados sin microgestionar cada variable."},
+      {front:"Store Loyalty", sub:"Lealtad", back:"Palanca de repetición. Ideal cuando ya hay adquisición o tráfico, pero se necesita que el cliente vuelva a pedir 2da, 3ra o 4ta vez."},
+      {front:"SPIN", sub:"Situation, Problem, Implication, Need-payoff", back:"Estructura de discovery. No es interrogatorio; es entender contexto, dolor, impacto y valor antes de recomendar."},
+      {front:"Feel-Felt-Found", sub:"Validar, conectar, reenfocar", back:"Útil para objeciones. Reconocé la preocupación, normalizá con experiencia de otros merchants y llevá a una prueba o dato concreto."},
+      {front:"Dayparting", sub:"Campañas por horario", back:"Sirve cuando el merchant tiene horas lentas y horas saturadas. La recomendación no es más volumen siempre, sino volumen donde puede manejarlo."},
+      {front:"QA Scorecard", sub:"Calidad de llamada", back:"No es solo compliance. Evalúa estructura, discovery, value presentation, objection handling, next steps y prácticas que protegen al merchant."},
+      {front:"Pipeline Hygiene", sub:"Higiene de pipeline", back:"Notas claras, follow-up accionable y cadencia sana. Lo que no queda documentado se vuelve fricción para tu yo del futuro."}
+    ];
+
+    const memoryPairs = [
+      ["Merchant Portal","Product Mix, insights, campaigns, ratings"],
+      ["SFDC / DDMx","Support cases and account context"],
+      ["Dime","Photo-related workflows and visual assets"],
+      ["Mint / Figment","Case tracking and store-level checks"],
+      ["Outreach","Calls, sequences and cadence"],
+      ["Slack channels","Escalations with context"],
+      ["Campaign Reporting","Validate live/past marketing performance"],
+      ["Google Search","Public context before the call"]
+    ];
+
+    const quizQuestions = [
+      {
+        q:"Un merchant no contesta. ¿Cuál es la mejor mentalidad para pre-call research?",
+        answers:["Investigar 10-15 minutos para dominar toda la cuenta","Armar una agenda útil en 2-3 minutos y llamar","No investigar hasta que conteste","Buscar únicamente el número en Google"],
+        correct:1,
+        why:"El playbook empuja eficiencia: suficiente contexto para sonar preparado, sin convertir research en excusa para no llamar."
+      },
+      {
+        q:"Ves que Maple Arepa House tiene 55% de fotos faltantes y buenas reviews. ¿Qué conviene hacer primero?",
+        answers:["Pitch de descuento agresivo inmediato","Abrir con valor sobre visual conversion y ofrecer apoyo con fotos","Escalar a retention sin hablar con el merchant","Pedir que bajen precios"],
+        correct:1,
+        why:"Fotos son una palanca de bajo riesgo para construir credibilidad antes de pedir inversión en campañas."
+      },
+      {
+        q:"El merchant dice: “Ads are too expensive”. ¿Cuál respuesta está mejor orientada?",
+        answers:["Bajar la presión y abandonar la recomendación","Decir que todos deben hacerlo","Validar, explicar pay-for-results, revisar presupuesto y proponer prueba controlada","Prometer ventas garantizadas"],
+        correct:2,
+        why:"La respuesta floor-ready no promete de más. Reconoce costo, explica el modelo y convierte la objeción en prueba medible."
+      },
+      {
+        q:"Sponsored Listings funcionan mejor cuando también se cuida…",
+        answers:["Photos, menu content and conversion basics","Solo el bid más alto","Que el merchant nunca haga promos","Llamar más veces al día"],
+        correct:0,
+        why:"Visibilidad sin conversión puede desperdiciar oportunidad. Fotos, menú y contenido influyen en performance."
+      },
+      {
+        q:"Casa Verde está saturado en dinner pero flojo en lunch. ¿Qué concepto ayuda?",
+        answers:["Dayparting / horario específico","Llamadas sin email","Cerrar la tienda en Merchant Portal","No ofrecer nada"],
+        correct:0,
+        why:"Dayparting permite orientar campañas a horas lentas sin empujar volumen donde la operación ya está al límite."
+      },
+      {
+        q:"Operation Quality muestra fricciones fuertes. ¿Qué debe hacer el AM antes de empujar más demanda?",
+        answers:["Ignorar la operación porque solo importan ads","Diagnosticar la causa y conectar soporte/acción operativa","Ofrecer BOGO sin discovery","Actualizar pipeline y no llamar"],
+        correct:1,
+        why:"Más órdenes no ayudan si la experiencia falla. Primero se identifica la fricción operativa y se decide si corresponde soporte, coaching o campaña limitada."
+      },
+      {
+        q:"El objetivo de Store Loyalty se alinea más con…",
+        answers:["Clientes que nunca han visto el restaurante","Repeat orders y frecuencia","Resolver un caso de pago","Eliminar comisiones"],
+        correct:1,
+        why:"Loyalty es una palanca de retención y frecuencia; complementa adquisición."
+      },
+      {
+        q:"¿Qué hace fuerte una apertura de llamada?",
+        answers:["Presentarse, recorded line, valor específico y permiso para conversar","Leer un script completo sin pausa","Pedir una venta antes de escuchar","Hablar de todos los productos disponibles"],
+        correct:0,
+        why:"Una buena apertura gana derecho a continuar: identifica quién sos, por qué llamás y qué valor específico viste."
+      },
+      {
+        q:"En discovery, ¿cuál pregunta abre mejor conversación?",
+        answers:["¿Quiere comprar ads sí o no?","¿Cuál es su objetivo principal este mes: nuevos clientes, ticket promedio, repeat orders o operación?","¿Le mando un correo?","¿Quiere descuento?"],
+        correct:1,
+        why:"La pregunta no encierra al merchant en tu producto; abre el problema de negocio."
+      },
+      {
+        q:"Pipeline hygiene significa principalmente…",
+        answers:["Tener muchas pestañas abiertas","Documentar qué pasó, qué sigue y cuándo seguir","Llamar siempre al mismo merchant","No usar notas para ahorrar tiempo"],
+        correct:1,
+        why:"Un pipeline sano hace que cada follow-up sea más fácil, más relevante y menos repetitivo para el merchant."
+      }
+    ];
+
+    const dojoItems = [
+      {
+        rejection:"“We already advertise on Instagram and Google.”",
+        options:[
+          "Comparar negativamente esas plataformas y decir que no sirven.",
+          "Reconocer que es positivo, diferenciar intención de compra en DoorDash y explicar pago ligado a orden.",
+          "Cambiar de tema a soporte técnico."
+        ],
+        correct:1
+      },
+      {
+        rejection:"“I don’t want discounts; margins are tight.”",
+        options:[
+          "Validar margen, explorar objetivo y proponer alternativas: Sponsored Listings, photos, AOV bundles o dayparting.",
+          "Insistir en BOGO porque es popular.",
+          "Decir que todos los restaurantes deben invertir."
+        ],
+        correct:0
+      },
+      {
+        rejection:"“Dinner is already too busy.”",
+        options:[
+          "Cancelar cualquier recomendación de crecimiento.",
+          "Recomendar dayparting o Happy Hour para horas lentas y proteger capacidad operativa.",
+          "Sugerir aumentar hours sin revisar operación."
+        ],
+        correct:1
+      },
+      {
+        rejection:"“I tried promotions before and it didn’t work.”",
+        options:[
+          "Pedir permiso para revisar Campaign Reporting y entender offer, timing, audience y menu readiness.",
+          "Decir que esta vez será diferente sin revisar nada.",
+          "Pasar directamente a otro merchant."
+        ],
+        correct:0
+      },
+      {
+        rejection:"“I don’t have time to use the Merchant Portal.”",
+        options:[
+          "Hacer todo sin explicar nada.",
+          "Guiar una acción pequeña en vivo, enviar steps y confirmar el próximo paso self-serve.",
+          "Cerrar el caso como not interested."
+        ],
+        correct:1
+      },
+      {
+        rejection:"“Photoshoot wastes food.”",
+        options:[
+          "Validar costo, explicar lifetime value potencial de fotos y ofrecer opciones de carga/soporte.",
+          "Decir que la preocupación no tiene sentido.",
+          "Ofrecer Loyalty sin resolver fotos."
+        ],
+        correct:0
+      }
+    ];
+
+    const cases = [
+      {
+        name:"Maple Arepa House",
+        score:"72",
+        tags:["Photos","Good ratings","New customers"],
+        facts:["55% of menu items missing photos","4.6 rating with strong reviews","Low new customer share last 30 days","Owner worries about time"],
+        backTitle:"Recomendación floor-ready",
+        back:["Abrí con el dato visual: buen producto, pero parte del menú no está vendiendo con los ojos.","Propón resolver photos first: DIY upload, photoshoot or support case depending on access.","Después conectá Sponsored Listings como segunda fase: primero convertir mejor, luego aumentar visibilidad.","Discovery incómodo: “¿Qué platos tienen margen suficiente para empujar si sube la demanda?”"]
+      },
+      {
+        name:"Casa Verde Taqueria",
+        score:"64",
+        tags:["Ops","Dayparting","Lunch"],
+        facts:["Dinner demand is strong","Lunch orders are weak","Recent cancellations increased","Merchant fears operational overload"],
+        backTitle:"Recomendación floor-ready",
+        back:["No empujes volumen general. Primero reconocé la capacidad operativa.","Usá Operation Quality como punto de conversación y preguntá qué causa cancellations.","Si la operación se controla, recomendá dayparting para lunch o Happy Hour, no dinner.","Next step: revisar horarios, prep constraints y una campaña limitada por ventana."]
+      },
+      {
+        name:"Prairie Noodle Bar",
+        score:"81",
+        tags:["AOV","Bundles","Product Mix"],
+        facts:["High repeat customers","Top item has strong margin","Average ticket is flat","Menu has no bundles or add-ons"],
+        backTitle:"Recomendación floor-ready",
+        back:["Usá Product Mix para identificar star dishes y construir bundles.","Recomendá Spend X Get Y o add-ons si el objetivo es subir ticket, no solo órdenes.","No empieces por discount amplio: puede bajar margen sin mover AOV.","Pregunta SPIN: “What items do customers usually add in-store but not online?”"]
+      },
+      {
+        name:"North Shore Burgers",
+        score:"76",
+        tags:["Sponsored Listings","Competition","Photos"],
+        facts:["Good photos and descriptions","Competes in crowded burger category","Owner asks why bid matters","No active ads"],
+        backTitle:"Recomendación floor-ready",
+        back:["Explicá auction sin tecnicismo excesivo: bid importa, pero quality score/content también.","Recomendá automatic bidding como punto de partida si es nuevo en ads.","Define weekly budget y success metric antes de activar.","Objection ready: no se paga por views; la conversación debe aterrizar en órdenes y control de spend."]
+      },
+      {
+        name:"Sunrise Bagel Co.",
+        score:"69",
+        tags:["Loyalty","Breakfast","Repeat"],
+        facts:["Strong breakfast regulars","New customers try once but do not return","Owner wants predictable repeat orders","Already has basic menu setup"],
+        backTitle:"Recomendación floor-ready",
+        back:["Si el problema es frecuencia, Store Loyalty o win-back puede ser más lógico que solo adquisición.","Conectá reward con comportamiento: occasional to frequent.","Asegurate de explicar activación y limitaciones sin prometer resultados específicos.","Next step: elegir threshold/reward y revisar si el merchant tiene permisos adecuados."]
+      },
+      {
+        name:"Lotus Bowl Express",
+        score:"58",
+        tags:["Support","Trust","Escalation"],
+        facts:["Payment concern unresolved","Merchant frustrated with previous support","Low interest in campaigns","Account notes are incomplete"],
+        backTitle:"Recomendación floor-ready",
+        back:["No vendas encima de una herida abierta. Primero reconstruí confianza.","Crear o ubicar case correcto, documentar detalle y dar next step realista.","Después de resolver soporte, volvés a growth. El orden importa.","Coaching point: people-oriented no significa evitar conversaciones difíciles; significa resolver la fricción correcta primero."]
+      }
+    ];
+
+    const campaignCopy = {
+      new:{
+        title:"Acquisition path",
+        primary:"Sponsored Listings + primera oferta controlada",
+        why:"El objetivo es traer clientes que todavía no compran. Ads aumentan visibilidad; una oferta específica puede reducir fricción de primera compra.",
+        risk:"Validar que el menú convierta: fotos, descripciones y ratings antes de empujar tráfico.",
+        question:"¿Qué tipo de cliente nuevo querés atraer y en qué horario podés manejar más volumen?"
+      },
+      repeat:{
+        title:"Retention path",
+        primary:"Store Loyalty / Order Again & Save",
+        why:"Si el problema es frecuencia, la solución debe apuntar a regreso, no solo a alcance.",
+        risk:"No confundir repeat con adquisición. Primero identificar customer mix: new, occasional, frequent.",
+        question:"¿Qué te gustaría que hiciera un cliente después de probarte por primera vez?"
+      },
+      aov:{
+        title:"Average ticket path",
+        primary:"Spend X Get Y, bundles, add-ons",
+        why:"Cuando el ticket está plano, el foco es tamaño de orden. Product Mix ayuda a elegir items y combinaciones.",
+        risk:"Un descuento mal diseñado puede bajar margen sin subir ticket.",
+        question:"¿Qué producto de alto margen se suele agregar en tienda pero no aparece fuerte online?"
+      },
+      visibility:{
+        title:"Visibility path",
+        primary:"Sponsored Listings",
+        why:"Si el merchant tiene buen contenido y necesita aparecer en búsquedas/categorías, la visibilidad puede ser el cuello de botella.",
+        risk:"Bid sin buena conversión puede desperdiciar oportunidad.",
+        question:"¿Qué keywords, cuisine type o meal occasion querés ganar?"
+      },
+      slow:{
+        title:"Slow-hours path",
+        primary:"Dayparted promo / Happy Hour",
+        why:"Cuando el problema está en un horario específico, no conviene incentivar todo el día.",
+        risk:"No activar durante horas donde la cocina ya está saturada.",
+        question:"¿Qué ventana horaria necesita demanda sin afectar calidad?"
+      },
+      conversion:{
+        title:"Conversion path",
+        primary:"Photos, descriptions, category clean-up before spend",
+        why:"Si ya hay tráfico pero no convierte, primero se mejora la página del store.",
+        risk:"Más visibilidad no arregla un menú confuso.",
+        question:"¿Qué item clave necesita verse o explicarse mejor para que el cliente compre?"
+      }
+    };
+
+    const flowCorrect = [
+      "Recorded line + identify yourself",
+      "Value prop based on account signal",
+      "Ask permission and set agenda",
+      "Open discovery with business goal",
+      "Diagnose with data and follow-up questions",
+      "Present one recommendation tied to goal",
+      "Handle objection without overpromising",
+      "Confirm next step, owner and timeline",
+      "Log notes and update pipeline"
+    ];
+
+    const roleplays = [
+      {
+        title:"Too expensive",
+        topic:"Objection Handling",
+        difficulty:"Medium",
+        merchant:"“I’m not interested in ads. Everything on these apps gets expensive and I don’t want to lose money.”",
+        options:[
+          {text:"“I understand. Many merchants feel that way at first. Before recommending spend, can we look at what you would consider a profitable order and set a small weekly cap?”", best:true, why:"Valida, descubre margen y propone control. No promete ventas."},
+          {text:"“It is not expensive. You should try it because other restaurants use it.”", best:false, why:"Minimiza la preocupación y no usa discovery."},
+          {text:"“No problem, I’ll mark you as not interested.”", best:false, why:"Abandona demasiado rápido sin explorar objetivo ni riesgo."}
+        ]
+      },
+      {
+        title:"Missing photos",
+        topic:"Menu Optimization",
+        difficulty:"Easy",
+        merchant:"“I know we don’t have photos, but I don’t have time to deal with that right now.”",
+        options:[
+          {text:"“Totally fair. Could we start with your top 5 sellers only? I can guide the fastest path and then we can decide if a full photoshoot makes sense.”", best:true, why:"Reduce fricción y convierte una tarea grande en un primer paso."},
+          {text:"“Photos are mandatory, so you need to do it.”", best:false, why:"Suena punitivo y no construye colaboración."},
+          {text:"“Then let’s skip photos and launch discounts.”", best:false, why:"Salta a spend sin arreglar conversión."}
+        ]
+      },
+      {
+        title:"Portal confusion",
+        topic:"Tool Guidance",
+        difficulty:"Medium",
+        merchant:"“I never know where to find anything in the Merchant Portal.”",
+        options:[
+          {text:"“Let’s do one thing together now. I’ll guide you to Insights and Product Mix, then I’ll send a short step-by-step recap so you can repeat it.”", best:true, why:"Enseña una acción concreta y crea autonomía."},
+          {text:"“The portal is easy; you just need to explore.”", best:false, why:"Culpa al merchant y no resuelve."},
+          {text:"“Don’t use the portal; I’ll handle everything.”", best:false, why:"Puede ayudar hoy, pero no desarrolla apropiación del recurso."}
+        ]
+      },
+      {
+        title:"Previous promo failed",
+        topic:"Campaign Reporting",
+        difficulty:"Hard",
+        merchant:"“We ran a promo before and it didn’t do anything. Why would this be different?”",
+        options:[
+          {text:"“That’s exactly what I’d want to understand before suggesting another one. Can we review the previous campaign: audience, timing, offer, photos and item selection?”", best:true, why:"Convierte rechazo en diagnóstico basado en evidencia."},
+          {text:"“The new campaigns are better, trust me.”", best:false, why:"Pide confianza sin evidencia."},
+          {text:"“Then ads are the only option.”", best:false, why:"Hace salto de producto sin analizar causa."}
+        ]
+      },
+      {
+        title:"Support first",
+        topic:"Trust Recovery",
+        difficulty:"Hard",
+        merchant:"“I still have a payment issue. I don’t want to talk about marketing.”",
+        options:[
+          {text:"“Understood. Let’s prioritize the payment issue first. I’ll confirm the case path, document the details, and set a clear follow-up. After that, we can revisit growth.”", best:true, why:"Ordena la relación: confianza y soporte antes de venta."},
+          {text:"“Marketing is separate from payments, so let’s continue.”", best:false, why:"Ignora la emoción y la barrera real."},
+          {text:"“You need to contact support, not me.”", best:false, why:"Desvía sin ownership ni guía."}
+        ]
+      }
+    ];
+
+    const sliders = [
+      ["tools","Tool navigation","Sé dónde buscar y qué sistema usar."],
+      ["research","Pre-call research","Armo agenda útil en 2-3 minutos."],
+      ["diagnosis","Merchant diagnosis","Conecto métricas con problemas reales."],
+      ["discovery","Discovery / SPIN","Pregunto antes de recomendar."],
+      ["campaigns","Campaign fit","Elijo la palanca correcta para el objetivo."],
+      ["objections","Objection handling","Valido, reenfoco y propongo next step."],
+      ["support","Support & escalation","Sé cuándo crear caso, escalar o guiar self-serve."],
+      ["qa","QA discipline","Cuido recorded line, estructura, next steps y notas."],
+      ["pipeline","Pipeline hygiene","Documento y sigo cadencia sana."],
+      ["confidence","Call confidence","Sueno consultivo, claro y humano."]
+    ];
+
+    let state = {
+      xp:0,
+      awards:{},
+      checks:{},
+      profile:{},
+      sliders:{},
+      quizIndex:0,
+      quizScore:0,
+      quizAnswered:false,
+      memory:{moves:0,matches:0,first:null,second:null,lock:false},
+      flow:[...flowCorrect]
+    };
+
+    function load(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        if(raw){ state = {...state, ...JSON.parse(raw)}; }
+      }catch(e){ console.warn(e); }
+    }
+    function save(){ localStorage.setItem(LS_KEY, JSON.stringify(state)); }
+
+    function toast(msg){
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      setTimeout(()=>el.classList.remove("show"), 1600);
+    }
+
+    function award(id, points, label){
+      if(state.awards[id]) return;
+      state.awards[id] = {points, label, at:new Date().toISOString()};
+      state.xp += points;
+      save();
+      updateStats();
+      toast("+" + points + " XP · " + label);
+    }
+
+    function levelName(xp){
+      if(xp >= 900) return "Floor Ready";
+      if(xp >= 700) return "Closer";
+      if(xp >= 500) return "Campaign Builder";
+      if(xp >= 320) return "Consultative AM";
+      if(xp >= 180) return "Researcher";
+      if(xp >= 80) return "Navigator";
+      return "Rookie";
+    }
+
+    function checklistPct(){
+      const total = document.querySelectorAll("[data-check]").length || 1;
+      const done = Object.values(state.checks).filter(Boolean).length;
+      return Math.round((done/total)*100);
+    }
+
+    function sliderScore(){
+      const vals = sliders.map(s => Number(state.sliders[s[0]] || 0));
+      if(vals.every(v=>v===0)) return 0;
+      return Math.round(vals.reduce((a,b)=>a+b,0)/vals.length);
+    }
+
+    function progressPct(){
+      const xpPct = Math.min(100, Math.round(state.xp / 9.5));
+      const checkPct = checklistPct();
+      const scorePct = sliderScore();
+      return Math.round((xpPct*.50) + (checkPct*.20) + (scorePct*.30));
+    }
+
+    function updateStats(){
+      document.getElementById("xpStat").textContent = state.xp;
+      document.getElementById("levelStat").textContent = levelName(state.xp);
+      const pct = progressPct();
+      document.getElementById("readyStat").textContent = pct + "%";
+      document.getElementById("progressText").textContent = pct + "%";
+      document.getElementById("progressBar").style.width = pct + "%";
+      renderBadges();
+      updateReadiness();
+    }
+
+    function renderBadges(){
+      const wall = document.getElementById("badgeWall");
+      wall.innerHTML = badges.map(b => `
+        <span class="badge ${state.xp >= b.min ? "unlocked" : ""}">
+          <span>${b.icon}</span><span>${b.label}</span><small>${b.min} XP</small>
+        </span>
+      `).join("");
+    }
+
+    function initProfile(){
+      const fields = ["amName","cohort","personalGoal"];
+      fields.forEach(id=>{
+        const el = document.getElementById(id);
+        el.value = state.profile[id] || "";
+        el.addEventListener("input", ()=>{
+          state.profile[id] = el.value;
+          save();
+        });
+      });
+      document.getElementById("saveProfile").addEventListener("click", ()=>{
+        fields.forEach(id => state.profile[id] = document.getElementById(id).value);
+        save();
+        award("profile", 20, "Perfil guardado");
+      });
+    }
+
+    function renderConceptDeck(){
+      const deck = document.getElementById("conceptDeck");
+      deck.innerHTML = conceptCards.map((c, i)=>`
+        <div class="flip-card" tabindex="0" data-card="${i}">
+          <div class="flip-inner">
+            <div class="flip-front">
+              <span class="corner">Tap to flip</span>
+              <strong>${c.front}</strong>
+              <span class="mini">${c.sub}</span>
+            </div>
+            <div class="flip-back">
+              <span class="corner">Aplicación</span>
+              <p>${c.back}</p>
+            </div>
+          </div>
+        </div>
+      `).join("");
+      deck.querySelectorAll(".flip-card").forEach(card=>{
+        const flip = ()=>{
+          card.classList.toggle("flipped");
+          award("concept-" + card.dataset.card, 6, "Flashcard revisada");
+        };
+        card.addEventListener("click", flip);
+        card.addEventListener("keydown", e=>{if(e.key==="Enter" || e.key===" "){e.preventDefault();flip();}});
+      });
+      document.getElementById("flipAllBtn").addEventListener("click", ()=>{
+        document.querySelectorAll("#conceptDeck .flip-card").forEach(c=>c.classList.toggle("flipped", true));
+        award("concept-all", 24, "Deck completo");
+      });
+    }
+
+    function shuffle(arr){
+      return arr.map(v=>[Math.random(), v]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]);
+    }
+
+    function startMemory(){
+      state.memory = {moves:0,matches:0,first:null,second:null,lock:false};
+      const cards = [];
+      memoryPairs.forEach((p, idx)=>{
+        cards.push({pair:idx, text:p[0], type:"tool"});
+        cards.push({pair:idx, text:p[1], type:"use"});
+      });
+      const board = document.getElementById("memoryBoard");
+      board.innerHTML = shuffle(cards).map((c, i)=>`
+        <button class="mem-card" data-index="${i}" data-pair="${c.pair}" data-type="${c.type}" data-text="${c.text}">
+          ?
+        </button>
+      `).join("");
+      document.getElementById("memoryMoves").textContent = "0";
+      document.getElementById("memoryMatches").textContent = "0";
+      board.querySelectorAll(".mem-card").forEach(btn=>btn.addEventListener("click", onMemoryClick));
+      save();
+    }
+
+    function onMemoryClick(e){
+      const card = e.currentTarget;
+      if(state.memory.lock || card.classList.contains("matched") || card.classList.contains("revealed")) return;
+      card.classList.add("revealed");
+      card.textContent = card.dataset.text;
+      if(!state.memory.first){
+        state.memory.first = card.dataset.index;
+        return;
+      }
+      state.memory.second = card.dataset.index;
+      state.memory.moves++;
+      document.getElementById("memoryMoves").textContent = state.memory.moves;
+      const first = document.querySelector(`.mem-card[data-index="${state.memory.first}"]`);
+      const second = card;
+      if(first.dataset.pair === second.dataset.pair && first.dataset.type !== second.dataset.type){
+        first.classList.add("matched");
+        second.classList.add("matched");
+        state.memory.matches++;
+        document.getElementById("memoryMatches").textContent = state.memory.matches;
+        award("memory-pair-" + first.dataset.pair, 10, "Match de recursos");
+        state.memory.first = null;
+        state.memory.second = null;
+        if(state.memory.matches === memoryPairs.length){
+          award("memory-complete", 60, "Memoria completada");
+          showModal("Memoria completada", "Terminaste el mapa de herramientas. Buen indicador: ya no estás pensando solo en features, sino en dónde encontrar evidencia.");
+        }
+      }else{
+        state.memory.lock = true;
+        setTimeout(()=>{
+          first.classList.remove("revealed");
+          second.classList.remove("revealed");
+          first.textContent = "?";
+          second.textContent = "?";
+          state.memory.first = null;
+          state.memory.second = null;
+          state.memory.lock = false;
+        }, 850);
+      }
+      save();
+    }
+
+    function renderQuiz(){
+      const q = quizQuestions[state.quizIndex];
+      state.quizAnswered = false;
+      document.getElementById("quizCounter").textContent = `Pregunta ${state.quizIndex + 1}/${quizQuestions.length}`;
+      document.getElementById("quizScore").textContent = state.quizScore;
+      document.getElementById("quizQuestion").textContent = q.q;
+      document.getElementById("quizFeedback").style.display = "none";
+      const answers = document.getElementById("quizAnswers");
+      answers.innerHTML = q.answers.map((a, i)=>`<button class="answer" data-answer="${i}">${a}</button>`).join("");
+      answers.querySelectorAll(".answer").forEach(btn=>btn.addEventListener("click", ()=>answerQuiz(Number(btn.dataset.answer))));
+    }
+
+    function answerQuiz(i){
+      if(state.quizAnswered) return;
+      state.quizAnswered = true;
+      const q = quizQuestions[state.quizIndex];
+      const buttons = document.querySelectorAll("#quizAnswers .answer");
+      buttons.forEach((b, idx)=>{
+        if(idx === q.correct) b.classList.add("correct");
+        if(idx === i && idx !== q.correct) b.classList.add("wrong");
+      });
+      const fb = document.getElementById("quizFeedback");
+      fb.style.display = "block";
+      if(i === q.correct){
+        state.quizScore++;
+        award("quiz-q-" + state.quizIndex, 14, "Sprint Quiz correcto");
+        fb.innerHTML = "<strong>Correcto.</strong> " + q.why;
+      }else{
+        award("quiz-attempt-" + state.quizIndex, 3, "Intento de Sprint Quiz");
+        fb.innerHTML = "<strong>No todavía.</strong> " + q.why;
+      }
+      document.getElementById("quizScore").textContent = state.quizScore;
+      save();
+    }
+
+    function nextQuiz(){
+      if(state.quizIndex < quizQuestions.length - 1){
+        state.quizIndex++;
+        renderQuiz();
+      }else{
+        award("quiz-complete", 70, "Sprint Quiz completado");
+        showModal("Quiz completado", `Resultado: ${state.quizScore}/${quizQuestions.length}. Repetí las preguntas falladas como entrenamiento, no como castigo.`);
+      }
+      save();
+    }
+
+    function restartQuiz(){
+      state.quizIndex = 0;
+      state.quizScore = 0;
+      save();
+      renderQuiz();
+    }
+
+    function renderDojo(){
+      const rows = document.getElementById("dojoRows");
+      rows.innerHTML = dojoItems.map((item, idx)=>`
+        <div class="dojo-row">
+          <div class="rejection"><span class="tag red">Mx says</span><br>${item.rejection}</div>
+          <select data-dojo="${idx}">
+            <option value="">Elegí acción recomendada</option>
+            ${item.options.map((o,i)=>`<option value="${i}">${o}</option>`).join("")}
+          </select>
+          <span class="result-dot" id="dojoDot${idx}">?</span>
+        </div>
+      `).join("");
+    }
+
+    function checkDojo(){
+      let correct = 0;
+      dojoItems.forEach((item, idx)=>{
+        const val = document.querySelector(`[data-dojo="${idx}"]`).value;
+        const dot = document.getElementById("dojoDot" + idx);
+        dot.classList.remove("ok","bad");
+        if(Number(val) === item.correct){
+          correct++;
+          dot.textContent = "✓";
+          dot.classList.add("ok");
+          award("dojo-" + idx, 14, "Objeción resuelta");
+        }else{
+          dot.textContent = "×";
+          dot.classList.add("bad");
+        }
+      });
+      const fb = document.getElementById("dojoFeedback");
+      fb.style.display = "block";
+      fb.innerHTML = `<strong>Resultado:</strong> ${correct}/${dojoItems.length}. ${correct === dojoItems.length ? "Excelente: estás respondiendo con diagnóstico, no con presión." : "Revisá las filas marcadas. La respuesta más fuerte casi siempre valida, pregunta y aterriza un next step."}`;
+      if(correct === dojoItems.length) award("dojo-complete", 70, "Rejection Dojo completado");
+    }
+
+    function renderCases(){
+      const grid = document.getElementById("caseGrid");
+      grid.innerHTML = cases.map((c, idx)=>`
+        <div class="scenario-card" tabindex="0" data-case="${idx}">
+          <div class="scenario-inner">
+            <div class="scenario-front">
+              <span class="score-chip">${c.score}</span>
+              <div class="restaurant">${c.name}</div>
+              <div>${c.tags.map(t=>`<span class="tag honey">${t}</span>`).join("")}</div>
+              <div class="facts">
+                ${c.facts.map(f=>`<div class="fact"><span>•</span><span>${f}</span></div>`).join("")}
+              </div>
+              <small>Tap para ver recomendación</small>
+            </div>
+            <div class="scenario-back">
+              <span class="tag teal">${c.backTitle}</span>
+              <div class="facts">
+                ${c.back.map(f=>`<div class="fact"><span>→</span><span>${f}</span></div>`).join("")}
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join("");
+      grid.querySelectorAll(".scenario-card").forEach(card=>{
+        const flip = ()=>{
+          card.classList.toggle("flipped");
+          award("case-" + card.dataset.case, 12, "Score card revisada");
+        };
+        card.addEventListener("click", flip);
+        card.addEventListener("keydown", e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();flip();}});
+      });
+    }
+
+    function buildCampaign(){
+      const goal = document.getElementById("campaignGoal").value;
+      const context = document.getElementById("campaignContext").value;
+      const merchant = document.getElementById("campaignMerchant").value;
+      let c = {...campaignCopy[goal]};
+      let guardrail = "";
+      if(context === "missingPhotos"){
+        guardrail = "Guardrail: antes de gastar, resolvé fotos/descripciones de los items clave. Tráfico sin conversión no es estrategia.";
+        if(goal !== "conversion") c.primary += " después de photos/menu cleanup";
+      }
+      if(context === "dashpass"){
+        guardrail = "Guardrail: si ya hay DashPass, evitá recomendar una promo que duplique un beneficio similar sin explicar valor incremental.";
+      }
+      if(context === "busyDinner"){
+        guardrail = "Guardrail: protegé dinner. Usá dayparting para no romper operación.";
+        c.primary = "Dayparted campaign for slower hours";
+      }
+      if(context === "budgetConcern"){
+        guardrail = "Guardrail: arrancá con presupuesto controlado, prueba acotada y métrica clara.";
+      }
+      if(context === "greatReviews"){
+        guardrail = "Guardrail: buenas reviews hacen más defendible empujar visibilidad, pero igual validá capacidad.";
+      }
+      if(context === "lowOps"){
+        guardrail = "Guardrail: Operation Quality primero. No aumentes demanda sobre una experiencia rota.";
+        c.primary = "Operational fix first, campaign second";
+      }
+      const box = document.getElementById("campaignRec");
+      box.innerHTML = `
+        <span class="tag red">${merchant}</span>
+        <div class="rec-title">${c.title}: ${c.primary}</div>
+        <ul class="rec-list">
+          <li><span><b>Por qué:</b> ${c.why}</span></li>
+          <li><span><b>Riesgo:</b> ${c.risk}</span></li>
+          <li><span><b>Guardrail:</b> ${guardrail}</span></li>
+          <li><span><b>Pregunta de discovery:</b> ${c.question}</span></li>
+          <li><span><b>Next step sugerido:</b> confirmar objetivo, presupuesto/limitación, owner y fecha de revisión.</span></li>
+        </ul>
+      `;
+      award("campaign-build", 40, "Campaign Lab usado");
+    }
+
+    function initFlow(){
+      state.flow = state.flow && state.flow.length ? state.flow : shuffle([...flowCorrect]);
+      if(JSON.stringify(state.flow) === JSON.stringify(flowCorrect)){
+        state.flow = shuffle([...flowCorrect]);
+      }
+      renderFlow();
+    }
+
+    function renderFlow(){
+      const list = document.getElementById("flowList");
+      list.innerHTML = state.flow.map((step, idx)=>`
+        <div class="flow-step">
+          <span class="flow-num">${idx+1}</span>
+          <strong>${step}</strong>
+          <span class="flow-actions">
+            <button class="icon-btn" data-up="${idx}" aria-label="Mover arriba">↑</button>
+            <button class="icon-btn" data-down="${idx}" aria-label="Mover abajo">↓</button>
+          </span>
+        </div>
+      `).join("");
+      list.querySelectorAll("[data-up]").forEach(b=>b.addEventListener("click", ()=>{
+        const i = Number(b.dataset.up);
+        if(i>0){ [state.flow[i-1], state.flow[i]] = [state.flow[i], state.flow[i-1]]; save(); renderFlow(); }
+      }));
+      list.querySelectorAll("[data-down]").forEach(b=>b.addEventListener("click", ()=>{
+        const i = Number(b.dataset.down);
+        if(i<state.flow.length-1){ [state.flow[i+1], state.flow[i]] = [state.flow[i], state.flow[i+1]]; save(); renderFlow(); }
+      }));
+    }
+
+    function checkFlow(){
+      let correct = 0;
+      state.flow.forEach((s,i)=>{ if(s === flowCorrect[i]) correct++; });
+      const fb = document.getElementById("flowFeedback");
+      fb.style.display = "block";
+      fb.innerHTML = `<strong>${correct}/${flowCorrect.length} pasos en posición correcta.</strong> ${correct === flowCorrect.length ? "Excelente. La estructura protege la experiencia del merchant y la calidad de la llamada." : "Tip: no presentes producto antes de discovery; no cierres sin owner, timeline y nota."}`;
+      award("flow-check", 20, "Call Flow revisado");
+      if(correct === flowCorrect.length) award("flow-perfect", 80, "Call Flow perfecto");
+    }
+
+    function renderRoleplay(){
+      const sel = document.getElementById("roleplaySelect");
+      sel.innerHTML = roleplays.map((r,i)=>`<option value="${i}">${r.title}</option>`).join("");
+      sel.addEventListener("change", updateRoleplay);
+      updateRoleplay();
+    }
+
+    function updateRoleplay(){
+      const idx = Number(document.getElementById("roleplaySelect").value || 0);
+      const r = roleplays[idx];
+      document.getElementById("roleplayTopic").textContent = r.topic;
+      document.getElementById("roleplayDifficulty").textContent = r.difficulty;
+      document.getElementById("merchantLine").textContent = r.merchant;
+      const opts = document.getElementById("responseOptions");
+      opts.innerHTML = r.options.map((o,i)=>`<button class="response-btn" data-r="${idx}" data-o="${i}">${o.text}</button>`).join("");
+      document.getElementById("roleplayFeedback").style.display = "none";
+      opts.querySelectorAll(".response-btn").forEach(btn=>btn.addEventListener("click", ()=>{
+        const opt = r.options[Number(btn.dataset.o)];
+        opts.querySelectorAll(".response-btn").forEach(b=>b.disabled=true);
+        if(opt.best){
+          btn.classList.add("best");
+          award("roleplay-" + idx, 28, "Roleplay correcto");
+        }else{
+          btn.classList.add("miss");
+          const bestIndex = r.options.findIndex(x=>x.best);
+          opts.querySelector(`[data-o="${bestIndex}"]`).classList.add("best");
+          award("roleplay-attempt-" + idx, 5, "Roleplay intentado");
+        }
+        const fb = document.getElementById("roleplayFeedback");
+        fb.style.display = "block";
+        fb.innerHTML = `<strong>${opt.best ? "Buena elección." : "Revisá el enfoque."}</strong> ${opt.why}`;
+      }));
+    }
+
+    function renderSliders(){
+      const grid = document.getElementById("sliderGrid");
+      grid.innerHTML = sliders.map(([id,label,desc])=>`
+        <div class="slider-card">
+          <div class="slider-head"><span>${label}</span><span id="val-${id}">${state.sliders[id] || 0}</span></div>
+          <input type="range" min="0" max="100" step="5" value="${state.sliders[id] || 0}" data-slider="${id}">
+          <small>${desc}</small>
+        </div>
+      `).join("");
+      grid.querySelectorAll("[data-slider]").forEach(sl=>{
+        sl.addEventListener("input", ()=>{
+          state.sliders[sl.dataset.slider] = Number(sl.value);
+          document.getElementById("val-" + sl.dataset.slider).textContent = sl.value;
+          save();
+          award("scorecard-touch", 25, "Readiness scorecard usado");
+          updateStats();
+        });
+      });
+      updateReadiness();
+    }
+
+    function updateReadiness(){
+      const score = sliderScore();
+      const scoreEl = document.getElementById("readinessScore");
+      if(scoreEl) scoreEl.textContent = score;
+      const text = document.getElementById("readinessText");
+      const list = document.getElementById("priorityList");
+      if(!text || !list) return;
+      if(score === 0){
+        text.textContent = "Mové los sliders para ver tu diagnóstico.";
+        list.innerHTML = "";
+        return;
+      }
+      if(score >= 85) text.textContent = "Listo para floor con monitoreo normal. Tu foco ahora es consistencia, no más teoría.";
+      else if(score >= 70) text.textContent = "Casi listo. Necesitás práctica dirigida en los puntos más bajos antes de tomar volumen completo.";
+      else if(score >= 50) text.textContent = "Nesting recomendado. Hay base, pero todavía existen riesgos visibles en llamadas reales.";
+      else text.textContent = "No entrar a floor sin coaching intensivo. El riesgo no es solo ventas: es confianza del merchant y QA.";
+      const ranked = sliders
+        .map(([id,label,desc])=>({id,label,desc,val:Number(state.sliders[id]||0)}))
+        .sort((a,b)=>a.val-b.val)
+        .slice(0,3);
+      list.innerHTML = ranked.map(r=>`<li><b>${r.label}:</b> ${r.val}/100. Práctica sugerida: ${practiceFor(r.id)}</li>`).join("");
+    }
+
+    function practiceFor(id){
+      const map = {
+        tools:"repetir Memoria + explicar resource map en voz alta.",
+        research:"hacer 5 pre-call briefs de 2 minutos con timer.",
+        diagnosis:"usar Score Cards y justificar una recomendación con 2 señales.",
+        discovery:"hacer roleplay con 3 preguntas SPIN antes de pitch.",
+        campaigns:"usar Campaign Lab hasta defender 3 recomendaciones distintas.",
+        objections:"repetir Rejection Dojo y escribir respuestas propias.",
+        support:"simular caso donde soporte va antes que venta.",
+        qa:"grabar mock call y revisar opening, permission, next steps y notes.",
+        pipeline:"escribir follow-up notes con owner, action y date.",
+        confidence:"practicar opening de 30 segundos sin leer."
+      };
+      return map[id] || "práctica dirigida.";
+    }
+
+    function initChecks(){
+      document.querySelectorAll("[data-check]").forEach(ch=>{
+        ch.checked = !!state.checks[ch.dataset.check];
+        ch.addEventListener("change", ()=>{
+          state.checks[ch.dataset.check] = ch.checked;
+          save();
+          if(ch.checked) award("check-" + ch.dataset.check, 8, "Checklist completado");
+          updateStats();
+        });
+      });
+    }
+
+    function generateReport(){
+      const ranked = sliders
+        .map(([id,label])=>({label,val:Number(state.sliders[id]||0)}))
+        .sort((a,b)=>a.val-b.val);
+      const low = ranked.slice(0,3).map(x=>`${x.label} (${x.val}/100)`).join(", ");
+      const high = ranked.slice(-3).reverse().map(x=>`${x.label} (${x.val}/100)`).join(", ");
+      const checksDone = Object.values(state.checks).filter(Boolean).length;
+      const totalChecks = document.querySelectorAll("[data-check]").length;
+      const name = document.getElementById("amName").value || "AM";
+      const cohort = document.getElementById("cohort").value || "N/A";
+      const goal = document.getElementById("personalGoal").value || "N/A";
+      const report = [
+        `AM Floor-Ready Quest - Coaching Handoff`,
+        `AM: ${name}`,
+        `Cohort: ${cohort}`,
+        `Meta personal: ${goal}`,
+        ``,
+        `XP: ${state.xp}`,
+        `Nivel: ${levelName(state.xp)}`,
+        `Readiness general: ${progressPct()}%`,
+        `Scorecard autoevaluado: ${sliderScore()}%`,
+        `Checklist: ${checksDone}/${totalChecks}`,
+        ``,
+        `Fortalezas más altas: ${high || "Sin datos"}`,
+        `Prioridades de coaching: ${low || "Sin datos"}`,
+        ``,
+        `Fortaleza observada por el AM: ${document.getElementById("strengthNote").value || "Pendiente"}`,
+        `Fricción / tema para coaching: ${document.getElementById("frictionNote").value || "Pendiente"}`,
+        `Próxima acción: ${document.getElementById("nextActionNote").value || "Pendiente"}`,
+        ``,
+        `Lectura sugerida para TL: usar este resultado junto con QA, shadowing y desempeño real. El score no reemplaza observación de llamadas.`
+      ].join("\n");
+      document.getElementById("reportBox").value = report;
+      award("report-generated", 30, "Reporte generado");
+    }
+
+    function copyReport(){
+      const box = document.getElementById("reportBox");
+      box.select();
+      document.execCommand("copy");
+      toast("Reporte copiado");
+    }
+
+    function resetSliders(){
+      state.sliders = {};
+      save();
+      renderSliders();
+      updateStats();
+    }
+
+    function resetAll(){
+      if(!confirm("¿Resetear todo el progreso de este navegador?")) return;
+      localStorage.removeItem(LS_KEY);
+      location.reload();
+    }
+
+    function showModal(title, body){
+      document.getElementById("modalTitle").textContent = title;
+      document.getElementById("modalBody").textContent = body;
+      document.getElementById("modal").classList.add("open");
+    }
+
+    function bind(){
+      document.getElementById("newMemory").addEventListener("click", startMemory);
+      document.getElementById("nextQuiz").addEventListener("click", nextQuiz);
+      document.getElementById("restartQuiz").addEventListener("click", restartQuiz);
+      document.getElementById("checkDojo").addEventListener("click", checkDojo);
+      document.getElementById("shuffleCases").addEventListener("click", ()=>{
+        cases.sort(()=>Math.random()-.5);
+        renderCases();
+        award("cases-shuffled", 8, "Casos mezclados");
+      });
+      document.getElementById("buildCampaign").addEventListener("click", buildCampaign);
+      document.getElementById("checkFlow").addEventListener("click", checkFlow);
+      document.getElementById("resetSliders").addEventListener("click", resetSliders);
+      document.getElementById("generateReport").addEventListener("click", generateReport);
+      document.getElementById("copyReport").addEventListener("click", copyReport);
+      document.getElementById("resetAll").addEventListener("click", resetAll);
+      document.getElementById("printBtn").addEventListener("click", ()=>window.print());
+      document.getElementById("closeModal").addEventListener("click", ()=>document.getElementById("modal").classList.remove("open"));
+      document.getElementById("modal").addEventListener("click", e=>{ if(e.target.id==="modal") e.currentTarget.classList.remove("open"); });
+    }
+
+    function init(){
+      load();
+      initProfile();
+      renderConceptDeck();
+      startMemory();
+      renderQuiz();
+      renderDojo();
+      renderCases();
+      initFlow();
+      renderRoleplay();
+      renderSliders();
+      initChecks();
+      bind();
+      updateStats();
+    }
+
+    init();
+  </script>
+</body>
+</html>

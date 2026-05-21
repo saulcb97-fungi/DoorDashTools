@@ -1,0 +1,1129 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AM Floor-Ready Quest | DoorDash Movate Training Companion</title>
+  <meta name="description" content="Laboratorio interactivo de práctica para nuevos Account Managers de DoorDash. Diagnóstico, discovery, campañas, objections y QA antes del floor.">
+  <style>
+    :root{
+      --paper:#f5ead8;
+      --paper-2:#fff8ed;
+      --paper-3:#ead7b7;
+      --ink:#241914;
+      --muted:#5e4e3f;
+      --line:#d8c29e;
+      --accent:#d63518;
+      --accent-dark:#8a200d;
+      --accent-soft:#ffe0d4;
+      --teal:#0f7f73;
+      --teal-soft:#d9f0eb;
+      --teal-deep:#064d45;
+      --honey:#d99a2b;
+      --honey-soft:#fff0c9;
+      --honey-deep:#6b3d04;
+      --sage:#6f8d66;
+      --plum:#6c3555;
+      --plum-soft:#f3deeb;
+      --ok:#1a6b44;
+      --bad:#8a2417;
+      --warn:#8f5a06;
+      --shadow: 0 22px 60px rgba(36,25,20,.13);
+      --shadow-soft: 0 12px 34px rgba(36,25,20,.09);
+      --radius: 28px;
+      --radius-sm: 16px;
+      --serif: Charter, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+      --sans: "Avenir Next", Avenir, "Trebuchet MS", Verdana, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 12% 6%, rgba(214,53,24,.10), transparent 32rem),
+        radial-gradient(circle at 88% 12%, rgba(15,127,115,.10), transparent 28rem),
+        radial-gradient(circle at 78% 92%, rgba(217,154,43,.12), transparent 30rem),
+        linear-gradient(90deg, rgba(36,25,20,.035) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(36,25,20,.028) 1px, transparent 1px),
+        var(--paper);
+      background-size:auto, auto, auto, 34px 34px, 34px 34px, auto;
+      font-family:var(--serif);
+      line-height:1.62;
+      overflow-x:hidden;
+    }
+
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.34;
+      mix-blend-mode:multiply;
+      background-image:
+        radial-gradient(rgba(36,25,20,.16) .5px, transparent .7px),
+        radial-gradient(rgba(36,25,20,.10) .5px, transparent .7px);
+      background-size:7px 7px, 11px 11px;
+      background-position:0 0, 3px 4px;
+      z-index:-1;
+    }
+
+    ::selection{background:rgba(214,53,24,.22)}
+    p{margin:0 0 1rem}
+    a{color:var(--accent-dark);text-decoration-thickness:.08em;text-underline-offset:.18em}
+    small{font-size:.86rem;color:var(--muted)}
+    button,input,textarea,select{font:inherit}
+
+    /* Focus visible — A11y */
+    *:focus{outline:none}
+    *:focus-visible{
+      outline:3px solid var(--accent);
+      outline-offset:2px;
+      border-radius:6px;
+    }
+    button:focus-visible, [role="button"]:focus-visible{
+      outline:3px solid var(--accent);
+      outline-offset:3px;
+    }
+
+    /* Skip link */
+    .skip-link{
+      position:absolute;
+      left:-9999px;
+      top:8px;
+      background:var(--ink);
+      color:var(--paper);
+      padding:.6rem 1rem;
+      border-radius:8px;
+      font:900 .82rem/1 var(--sans);
+      z-index:100;
+    }
+    .skip-link:focus{left:8px}
+
+    .page{width:min(1240px, calc(100% - 34px));margin:0 auto;padding:34px 0 82px}
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(36,25,20,.14);
+      background:
+        linear-gradient(135deg, rgba(255,248,237,.96), rgba(255,248,237,.76)),
+        repeating-linear-gradient(-6deg, rgba(36,25,20,.026) 0 1px, transparent 1px 12px);
+      border-radius:calc(var(--radius) + 12px);
+      box-shadow:var(--shadow);
+      padding:clamp(34px, 6vw, 76px);
+      margin-bottom:22px;
+    }
+    .hero:before{
+      content:"100";
+      position:absolute;
+      right:clamp(10px, 5vw, 54px);
+      bottom:-24px;
+      font:900 clamp(96px, 20vw, 250px)/.75 var(--sans);
+      letter-spacing:-.12em;
+      color:rgba(36,25,20,.055);
+      pointer-events:none;
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      width:360px;height:360px;
+      border-radius:50%;
+      background:rgba(214,53,24,.12);
+      right:-140px;top:-150px;
+      border:1px solid rgba(214,53,24,.25);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      gap:.55rem;
+      align-items:center;
+      border:1px solid rgba(214,53,24,.26);
+      border-radius:999px;
+      padding:.42rem .75rem;
+      background:rgba(255,248,237,.72);
+      color:var(--accent-dark);
+      font:900 .78rem/1 var(--sans);
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    .dot{width:.52rem;height:.52rem;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(214,53,24,.12)}
+    h1,h2,h3,h4{font-family:var(--serif);line-height:1.04;margin:0;color:var(--ink)}
+    h1{font-size:clamp(3.1rem, 8.6vw, 8rem);letter-spacing:-.07em;margin-top:1.15rem;max-width:980px}
+    h2{font-size:clamp(2.05rem, 5vw, 4.6rem);letter-spacing:-.052em;margin-bottom:1rem}
+    h3{font-size:clamp(1.5rem, 2.8vw, 2.45rem);letter-spacing:-.035em}
+    h4{font-size:1.14rem;letter-spacing:-.014em}
+    .subtitle{font-size:clamp(1.05rem, 2vw, 1.42rem);color:var(--muted);max-width:880px;margin:1rem 0 0}
+    .hero-grid{display:grid;grid-template-columns:1.22fr .78fr;gap:22px;align-items:end;margin-top:28px;position:relative;z-index:1}
+    .manifesto{
+      border-left:7px solid var(--accent);
+      background:rgba(255,255,255,.35);
+      padding:18px 20px;
+      border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+      box-shadow:0 1px 0 rgba(36,25,20,.08) inset;
+      font-size:1.05rem;
+    }
+    .manifesto strong{color:var(--accent-dark)}
+    .meta-card{
+      border:1px solid rgba(36,25,20,.14);
+      background:rgba(255,248,237,.86);
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow:var(--shadow-soft);
+    }
+    .meta-row{display:flex;justify-content:space-between;gap:16px;border-bottom:1px dashed var(--line);padding:.55rem 0;font-family:var(--sans);font-size:.92rem}
+    .meta-row:last-child{border-bottom:0}
+    .meta-row b{color:var(--ink)}
+    .meta-row span{color:var(--muted);text-align:right}
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      background:rgba(244,234,217,.84);
+      border:1px solid rgba(36,25,20,.12);
+      border-radius:0 0 22px 22px;
+      box-shadow:0 18px 42px rgba(36,25,20,.08);
+      margin:0 auto 24px;
+      padding:10px 12px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:12px;
+      align-items:center;
+    }
+    .nav{display:flex;gap:8px;overflow:auto;padding-bottom:2px;scrollbar-width:thin}
+    .nav a{
+      flex:0 0 auto;
+      color:var(--ink);
+      text-decoration:none;
+      font:900 .76rem/1 var(--sans);
+      letter-spacing:.04em;
+      text-transform:uppercase;
+      border:1px solid rgba(36,25,20,.15);
+      background:rgba(255,248,237,.62);
+      padding:.62rem .72rem;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    .nav a:hover{border-color:rgba(214,53,24,.42);color:var(--accent-dark)}
+    .status{display:flex;gap:8px;align-items:center;white-space:nowrap;font-family:var(--sans)}
+    .pill{
+      border:1px solid rgba(36,25,20,.14);
+      background:rgba(255,248,237,.7);
+      border-radius:999px;
+      padding:.58rem .72rem;
+      font:900 .78rem/1 var(--sans);
+      color:var(--ink);
+    }
+    .pill strong{color:var(--accent-dark)}
+    .btn{
+      appearance:none;
+      border:1px solid rgba(36,25,20,.14);
+      background:var(--ink);
+      color:var(--paper-2);
+      border-radius:999px;
+      padding:.70rem .95rem;
+      font:900 .82rem/1 var(--sans);
+      letter-spacing:.02em;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(36,25,20,.12);
+      transition:.18s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+    .btn.secondary{background:rgba(255,248,237,.74);color:var(--ink)}
+    .btn.accent{background:var(--accent);border-color:var(--accent);color:white}
+    .btn.ghost{box-shadow:none;background:transparent;color:var(--ink)}
+    .btn.small{padding:.52rem .68rem;font-size:.76rem}
+
+    .section{
+      margin:24px 0;
+      padding:clamp(24px, 4vw, 42px);
+      border:1px solid rgba(36,25,20,.12);
+      border-radius:var(--radius);
+      background:
+        linear-gradient(180deg, rgba(255,248,237,.90), rgba(255,248,237,.70)),
+        repeating-linear-gradient(90deg, rgba(36,25,20,.023) 0 1px, transparent 1px 16px);
+      box-shadow:var(--shadow-soft);
+    }
+    .section.compact{padding:24px}
+    .section-title{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:start;margin-bottom:22px}
+    .section-kicker{font:900 .78rem/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-dark);margin-bottom:.72rem}
+    .section-lede{font-size:1.07rem;color:var(--muted);max-width:870px}
+
+    .grid{display:grid;gap:18px}
+    .grid.two{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .grid.three{grid-template-columns:repeat(3, minmax(0,1fr))}
+    .grid.four{grid-template-columns:repeat(4, minmax(0,1fr))}
+    .card{
+      border:1px solid rgba(36,25,20,.13);
+      border-radius:var(--radius-sm);
+      background:rgba(255,248,237,.76);
+      padding:18px;
+      box-shadow:0 8px 24px rgba(36,25,20,.06);
+    }
+    .card h4{margin-bottom:.55rem}
+    .card p{color:var(--muted);font-size:.98rem}
+    .tag{
+      display:inline-flex;align-items:center;gap:.42rem;
+      border:1px solid rgba(36,25,20,.13);
+      border-radius:999px;
+      padding:.32rem .58rem;
+      font:900 .70rem/1 var(--sans);
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      color:var(--muted);
+      background:rgba(255,255,255,.33);
+      margin:.15rem .2rem .15rem 0;
+    }
+    .tag.red{color:var(--accent-dark);background:var(--accent-soft);border-color:rgba(214,53,24,.22)}
+    .tag.teal{color:var(--teal-deep);background:var(--teal-soft);border-color:rgba(15,127,115,.22)}
+    .tag.honey{color:var(--honey-deep);background:var(--honey-soft);border-color:rgba(217,154,43,.24)}
+    .tag.plum{color:#53243f;background:var(--plum-soft);border-color:rgba(108,53,85,.22)}
+    .mini{font:900 .76rem/1 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+    .notice{
+      border:1px dashed rgba(36,25,20,.22);
+      border-radius:var(--radius-sm);
+      padding:16px 18px;
+      background:rgba(255,255,255,.32);
+      color:var(--muted);
+    }
+    .pull{
+      font-size:clamp(1.35rem,3vw,2.25rem);
+      line-height:1.12;
+      letter-spacing:-.04em;
+      border-left:8px solid var(--accent);
+      padding:10px 0 10px 20px;
+      margin:20px 0;
+      max-width:900px;
+    }
+
+    .meter-wrap{display:grid;gap:10px;margin-top:16px}
+    .meter-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--sans);font-weight:900;font-size:.86rem;color:var(--muted)}
+    .meter{
+      height:17px;
+      border:1px solid rgba(36,25,20,.16);
+      border-radius:999px;
+      overflow:hidden;
+      background:rgba(36,25,20,.07);
+    }
+    .meter span{
+      display:block;height:100%;width:0%;
+      background:linear-gradient(90deg, var(--accent), var(--honey));
+      border-radius:999px;
+      transition:width .35s ease;
+    }
+
+    .roadmap{
+      display:grid;
+      grid-template-columns:repeat(5, minmax(0,1fr));
+      gap:12px;
+      margin-top:20px;
+    }
+    .stage{
+      position:relative;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:20px;
+      padding:18px;
+      background:rgba(255,248,237,.74);
+      min-height:170px;
+      overflow:hidden;
+    }
+    .stage:before{
+      content:attr(data-step);
+      position:absolute;
+      right:10px;bottom:-18px;
+      font:900 66px/.8 var(--sans);
+      color:rgba(36,25,20,.06);
+    }
+    .stage b{font-family:var(--sans);color:var(--accent-dark);font-size:.82rem;letter-spacing:.08em;text-transform:uppercase}
+    .stage h4{margin:.35rem 0 .5rem}
+    .stage p{font-size:.92rem;color:var(--muted);position:relative;z-index:1}
+
+    .input-row{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:12px;margin-top:14px}
+    label.field{display:grid;gap:6px;font-family:var(--sans);font-size:.82rem;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+    input[type="text"], textarea, select{
+      width:100%;
+      border:1px solid rgba(36,25,20,.18);
+      border-radius:14px;
+      background:rgba(255,248,237,.82);
+      color:var(--ink);
+      padding:.85rem .9rem;
+      outline:none;
+      box-shadow:0 1px 0 rgba(255,255,255,.4) inset;
+    }
+    textarea{min-height:110px;resize:vertical;text-transform:none;letter-spacing:normal;font-family:var(--sans);line-height:1.45}
+    select{cursor:pointer}
+
+    .flip-grid{display:grid;grid-template-columns:repeat(4, minmax(0,1fr));gap:14px}
+    .flip-card{
+      min-height:188px;
+      perspective:1000px;
+      cursor:pointer;
+      outline:none;
+    }
+    .flip-inner{
+      position:relative;
+      width:100%;height:100%;
+      min-height:188px;
+      transition:transform .55s ease;
+      transform-style:preserve-3d;
+      will-change:transform;
+    }
+    .flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+    .flip-front,.flip-back{
+      position:absolute;inset:0;
+      backface-visibility:hidden;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:20px;
+      padding:18px;
+      background:rgba(255,248,237,.82);
+      box-shadow:0 10px 22px rgba(36,25,20,.07);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .flip-front{background:linear-gradient(145deg, rgba(255,248,237,.92), rgba(255,224,212,.55))}
+    .flip-back{
+      transform:rotateY(180deg);
+      background:linear-gradient(145deg, rgba(255,248,237,.95), rgba(217,154,43,.14));
+    }
+    .flip-front strong{font-size:1.3rem;line-height:1.1}
+    .flip-back p{font-size:.95rem;color:var(--muted)}
+    .corner{
+      align-self:flex-start;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:999px;
+      padding:.22rem .48rem;
+      font:900 .68rem/1 var(--sans);
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      color:var(--accent-dark);
+      background:rgba(255,255,255,.38);
+    }
+
+    .memory-board{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+    .mem-card{
+      min-height:94px;
+      border:1px solid rgba(36,25,20,.15);
+      border-radius:18px;
+      background:var(--ink);
+      color:var(--paper-2);
+      cursor:pointer;
+      padding:12px;
+      display:grid;
+      place-items:center;
+      text-align:center;
+      font:900 .88rem/1.2 var(--sans);
+      transition:.2s ease;
+      user-select:none;
+    }
+    .mem-card.revealed,.mem-card.matched{
+      background:rgba(255,248,237,.86);
+      color:var(--ink);
+      transform:translateY(-2px);
+    }
+    .mem-card.matched{
+      border-color:rgba(26,107,68,.45);
+      background:rgba(217,240,235,.88);
+      color:var(--teal-deep);
+      cursor:default;
+    }
+    .game-status{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px;
+      font-family:var(--sans);font-weight:900;color:var(--muted)
+    }
+
+    .quiz-shell{
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:24px;
+      padding:20px;
+      background:
+        linear-gradient(135deg, rgba(255,248,237,.92), rgba(255,224,212,.42)),
+        repeating-linear-gradient(0deg, rgba(36,25,20,.025) 0 1px, transparent 1px 14px);
+    }
+    .quiz-top{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:14px;font-family:var(--sans);font-weight:900;color:var(--muted)}
+    .quiz-q{font-size:clamp(1.35rem,3vw,2.35rem);line-height:1.12;letter-spacing:-.04em;margin-bottom:14px}
+    .answers{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:12px}
+    .answer{
+      border:1px solid rgba(36,25,20,.15);
+      border-radius:18px;
+      padding:16px;
+      background:rgba(255,248,237,.84);
+      cursor:pointer;
+      text-align:left;
+      transition:.18s ease;
+      min-height:82px;
+      font-family:var(--sans);
+      color:var(--ink);
+    }
+    .answer:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 10px 20px rgba(36,25,20,.08)}
+    .answer.correct{background:rgba(217,240,235,.95);border-color:rgba(26,107,68,.5);color:var(--teal-deep)}
+    .answer.wrong{background:rgba(255,224,212,.92);border-color:rgba(138,36,23,.45);color:var(--bad)}
+    .answer:disabled{cursor:default}
+    .feedback{
+      margin-top:14px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.38);
+      border:1px dashed rgba(36,25,20,.18);
+      color:var(--muted);
+      display:none;
+    }
+
+    .dojo-row{
+      display:grid;
+      grid-template-columns:1fr 1fr auto;
+      gap:12px;
+      align-items:center;
+      padding:14px 0;
+      border-bottom:1px dashed var(--line);
+    }
+    .dojo-row:last-child{border-bottom:0}
+    .rejection{
+      font-size:1.02rem;
+      color:var(--ink);
+    }
+    .result-dot{
+      width:34px;height:34px;border-radius:50%;
+      display:grid;place-items:center;
+      font:900 .9rem/1 var(--sans);
+      background:rgba(36,25,20,.08);
+      color:var(--muted);
+    }
+    .result-dot.ok{background:rgba(217,240,235,.95);color:var(--ok)}
+    .result-dot.bad{background:rgba(255,224,212,.92);color:var(--bad)}
+
+    .case-grid{display:grid;grid-template-columns:repeat(3, minmax(0,1fr));gap:14px}
+    .scenario-card{
+      min-height:260px;
+      perspective:1100px;
+      cursor:pointer;
+      outline:none;
+    }
+    .scenario-inner{position:relative;min-height:260px;transform-style:preserve-3d;transition:transform .55s ease;will-change:transform}
+    .scenario-card.flipped .scenario-inner{transform:rotateY(180deg)}
+    .scenario-front,.scenario-back{
+      position:absolute;inset:0;backface-visibility:hidden;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:22px;
+      padding:18px;
+      background:rgba(255,248,237,.84);
+      box-shadow:0 10px 24px rgba(36,25,20,.07);
+      overflow:auto;
+    }
+    .scenario-front{background:linear-gradient(145deg, rgba(255,248,237,.94), rgba(217,154,43,.17))}
+    .scenario-back{transform:rotateY(180deg);background:linear-gradient(145deg, rgba(255,248,237,.96), rgba(15,127,115,.13))}
+    .restaurant{font-size:1.42rem;letter-spacing:-.04em;line-height:1.05;margin:.4rem 0}
+    .facts{display:grid;gap:7px;margin-top:12px}
+    .fact{display:flex;gap:8px;align-items:flex-start;color:var(--muted);font-size:.92rem}
+    .fact b{color:var(--ink)}
+    .score-chip{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-width:42px;height:42px;border-radius:50%;
+      background:var(--accent);color:white;
+      font:900 1rem/1 var(--sans);
+      box-shadow:0 8px 20px rgba(214,53,24,.2);
+    }
+
+    .builder-grid{display:grid;grid-template-columns:.95fr 1.05fr;gap:18px}
+    .choice-stack{display:grid;gap:12px}
+    .recommendation{
+      min-height:250px;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:22px;
+      padding:20px;
+      background:
+        linear-gradient(135deg, rgba(255,248,237,.96), rgba(217,240,235,.6)),
+        repeating-linear-gradient(90deg, rgba(36,25,20,.022) 0 1px, transparent 1px 14px);
+    }
+    .rec-title{font-size:1.9rem;line-height:1.05;letter-spacing:-.04em;margin:.4rem 0}
+    .rec-list{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+    .rec-list li{display:flex;gap:8px;color:var(--muted)}
+    .rec-list li:before{content:"→";color:var(--accent-dark);font-weight:900}
+
+    .flow-list{display:grid;gap:10px;margin-top:16px}
+    .flow-step{
+      display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:18px;
+      padding:12px 14px;
+      background:rgba(255,248,237,.78);
+    }
+    .flow-num{
+      width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+      background:rgba(214,53,24,.12);color:var(--accent-dark);
+      font:900 .84rem/1 var(--sans);
+    }
+    .flow-actions{display:flex;gap:5px}
+    .icon-btn{
+      width:38px;height:38px;border-radius:50%;
+      border:1px solid rgba(36,25,20,.15);
+      background:rgba(255,255,255,.35);
+      cursor:pointer;
+      display:grid;place-items:center;
+      font-weight:900;
+      color:var(--ink);
+    }
+    .flow-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+
+    .roleplay-shell{
+      display:grid;
+      grid-template-columns:.85fr 1.15fr;
+      gap:18px;
+    }
+    .merchant-bubble{
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:24px 24px 24px 6px;
+      padding:20px;
+      background:rgba(255,248,237,.88);
+      box-shadow:0 10px 22px rgba(36,25,20,.07);
+      font-size:1.15rem;
+    }
+    .response-options{display:grid;gap:10px;margin-top:14px}
+    .response-btn{
+      border:1px solid rgba(36,25,20,.15);
+      border-radius:18px;
+      padding:14px;
+      text-align:left;
+      background:rgba(255,248,237,.8);
+      cursor:pointer;
+      font-family:var(--sans);
+      transition:.18s ease;
+      color:var(--ink);
+    }
+    .response-btn:hover:not(:disabled){transform:translateY(-1px)}
+    .response-btn:disabled{cursor:default}
+    .response-btn.best{background:rgba(217,240,235,.95);border-color:rgba(26,107,68,.45);color:var(--teal-deep)}
+    .response-btn.miss{background:rgba(255,224,212,.92);border-color:rgba(138,36,23,.4);color:var(--bad)}
+
+    .slider-grid{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:14px}
+    .slider-card{
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:18px;
+      padding:15px;
+      background:rgba(255,248,237,.80);
+    }
+    .slider-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--sans);font-weight:900;margin-bottom:8px}
+    input[type="range"]{width:100%;accent-color:var(--accent)}
+    .score-output{
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:24px;
+      padding:22px;
+      background:linear-gradient(145deg, rgba(255,248,237,.95), rgba(255,224,212,.48));
+      position:sticky;
+      top:96px;
+    }
+    .big-score{font:900 clamp(3.2rem,8vw,5.5rem)/.8 var(--sans);letter-spacing:-.08em;color:var(--accent-dark)}
+    .priority-list{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+    .priority-list li{padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.38);border:1px dashed rgba(36,25,20,.14);color:var(--muted)}
+    .priority-list b{color:var(--ink)}
+
+    .check-grid{display:grid;grid-template-columns:repeat(2, minmax(0,1fr));gap:12px}
+    .check-item{
+      display:flex;gap:10px;align-items:flex-start;
+      border:1px solid rgba(36,25,20,.13);
+      border-radius:16px;
+      padding:12px;
+      background:rgba(255,248,237,.76);
+      font-family:var(--sans);
+      color:var(--muted);
+      cursor:pointer;
+    }
+    .check-item input{width:20px;height:20px;accent-color:var(--accent);flex:0 0 auto;margin-top:2px}
+    .check-item strong{color:var(--ink)}
+
+    .badge-wall{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .badge{
+      display:inline-flex;gap:8px;align-items:center;
+      border:1px solid rgba(36,25,20,.14);
+      border-radius:999px;
+      padding:.58rem .78rem;
+      background:rgba(255,255,255,.36);
+      font:900 .78rem/1 var(--sans);
+      color:var(--muted);
+      opacity:.45;
+      filter:grayscale(1);
+    }
+    .badge.unlocked{opacity:1;filter:none;background:rgba(255,248,237,.84);color:var(--ink);box-shadow:0 8px 16px rgba(36,25,20,.06)}
+    .badge span:first-child{font-size:1.1rem}
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%) translateY(18px);
+      opacity:0;
+      pointer-events:none;
+      background:var(--ink);
+      color:var(--paper-2);
+      border-radius:999px;
+      padding:.78rem 1rem;
+      z-index:50;
+      font:900 .86rem/1 var(--sans);
+      box-shadow:0 16px 40px rgba(36,25,20,.22);
+      transition:.25s ease;
+    }
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    .modal{
+      position:fixed;inset:0;z-index:60;
+      display:none;place-items:center;
+      background:rgba(36,25,20,.34);
+      padding:20px;
+    }
+    .modal.open{display:grid}
+    .modal-box{
+      width:min(720px,100%);
+      border:1px solid rgba(36,25,20,.18);
+      border-radius:28px;
+      background:var(--paper-2);
+      padding:26px;
+      box-shadow:var(--shadow);
+    }
+
+    .print-note{display:none}
+    footer{margin-top:28px;color:var(--muted);font-size:.94rem;text-align:center}
+
+    /* Respeta usuarios con prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce){
+      *,*:before,*:after{
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+        scroll-behavior:auto!important;
+      }
+    }
+
+    @media (max-width: 980px){
+      .hero-grid,.builder-grid,.roleplay-shell{grid-template-columns:1fr}
+      .grid.three,.grid.four,.flip-grid,.case-grid,.roadmap{grid-template-columns:repeat(2, minmax(0,1fr))}
+      .slider-grid,.check-grid{grid-template-columns:1fr}
+      .score-output{position:static}
+      .topbar{grid-template-columns:1fr}
+      .status{overflow:auto}
+    }
+    @media (max-width: 640px){
+      .page{width:min(100% - 22px, 1240px);padding-top:18px}
+      .hero{padding:28px}
+      .grid.two,.grid.three,.grid.four,.flip-grid,.case-grid,.roadmap,.answers,.input-row,.memory-board{grid-template-columns:1fr}
+      .dojo-row{grid-template-columns:1fr}
+      .result-dot{display:none}
+      .section-title{grid-template-columns:1fr}
+      .status{display:grid;grid-template-columns:repeat(2, minmax(0,1fr))}
+      .status .btn{grid-column:1/-1}
+    }
+    @media print{
+      body{background:white;color:#111}
+      body:before,.topbar,.btn,.toast,.modal,.skip-link{display:none!important}
+      .page{width:100%;padding:0}
+      .section,.hero,.card{box-shadow:none;break-inside:avoid}
+      .print-note{display:block}
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Saltar al contenido principal</a>
+
+  <div class="page">
+    <header class="hero" id="home">
+      <span class="eyebrow"><span class="dot" aria-hidden="true"></span> AM Floor-Ready Quest</span>
+      <h1>De onboarding a floor-ready.</h1>
+      <p class="subtitle">Un laboratorio interactivo para que nuevos Account Managers practiquen herramientas, diagnóstico, discovery, campañas, objections y QA antes de entrar al floor.</p>
+      <div class="hero-grid">
+        <div class="manifesto">
+          <strong>Propósito:</strong> no memorizar el playbook; convertirlo en criterio. Cada juego obliga al AM a decidir qué mirar, qué preguntar, qué recomendar, qué escalar y cómo cerrar el siguiente paso con un merchant ficticio.
+        </div>
+        <div class="meta-card">
+          <div class="meta-row"><b>Audiencia</b><span>Nuevos Account Managers</span></div>
+          <div class="meta-row"><b>Modo</b><span>Práctica autónoma + coaching TL</span></div>
+          <div class="meta-row"><b>Datos</b><span>100% ejemplos ficticios</span></div>
+          <div class="meta-row"><b>Resultado</b><span>Readiness score + plan personal</span></div>
+        </div>
+      </div>
+    </header>
+
+    <div class="topbar" role="navigation" aria-label="Navegación principal y estado">
+      <nav class="nav" aria-label="Secciones">
+        <a href="#start">Inicio</a>
+        <a href="#roadmap">Ruta</a>
+        <a href="#cards">Flashcards</a>
+        <a href="#memory">Memoria</a>
+        <a href="#quiz">Sprint Quiz</a>
+        <a href="#dojo">Rejections</a>
+        <a href="#cases">Score Cards</a>
+        <a href="#campaign">Campaign Lab</a>
+        <a href="#flow">Call Flow</a>
+        <a href="#roleplay">Roleplay</a>
+        <a href="#scorecard">Readiness</a>
+        <a href="#export">Export</a>
+      </nav>
+      <div class="status">
+        <span class="pill" aria-label="Experiencia acumulada">XP <strong id="xpStat">0</strong></span>
+        <span class="pill" aria-label="Nivel actual">Nivel <strong id="levelStat">Rookie</strong></span>
+        <span class="pill" aria-label="Porcentaje de readiness">Readiness <strong id="readyStat">0%</strong></span>
+        <button class="btn small secondary" id="printBtn">Imprimir / PDF</button>
+      </div>
+    </div>
+
+    <main id="main">
+      <section class="section" id="start" aria-labelledby="start-title">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Cómo usarlo</div>
+            <h2 id="start-title">Esto es práctica, no teoría decorada.</h2>
+            <p class="section-lede">El AM avanza por misiones. Cada misión deja evidencia: decisiones correctas, áreas flojas, notas de roleplay y un resumen para compartir con el TL. La herramienta guarda progreso en este navegador.</p>
+          </div>
+          <button class="btn accent" id="saveProfile">Guardar perfil</button>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <h3>Para el AM</h3>
+            <p>Hacé los juegos sin mirar la respuesta primero. Después revisá el feedback y repetí los módulos donde falles. La meta no es "pasar", es entender qué acción elegir cuando el merchant no sigue el guion ideal.</p>
+            <div class="input-row">
+              <label class="field" for="amName">Nombre AM
+                <input type="text" id="amName" placeholder="Ej. Andrea" autocomplete="name" />
+              </label>
+              <label class="field" for="cohort">Cohort / Semana
+                <input type="text" id="cohort" placeholder="Ej. Training Week 1" />
+              </label>
+              <label class="field" for="personalGoal">Meta personal
+                <input type="text" id="personalGoal" placeholder="Ej. mejorar objection handling" />
+              </label>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Para el TL / Coach</h3>
+            <p>La lectura del resultado debe ser individual. Dos AMs pueden tener el mismo score y necesitar coaching distinto: uno puede fallar por navegación de herramientas; otro por hablar demasiado y hacer poco discovery.</p>
+            <div class="notice">
+              Regla de oro: usar esta herramienta como diagnóstico formativo, no como castigo. El score abre conversación; no reemplaza QA, shadowing ni feedback de llamadas reales.
+            </div>
+          </div>
+        </div>
+
+        <div class="meter-wrap">
+          <div class="meter-head"><span>Progreso general del laboratorio</span><span id="progressText">0%</span></div>
+          <div class="meter" role="progressbar" aria-label="Progreso general" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressBar"></span></div>
+        </div>
+
+        <div class="badge-wall" id="badgeWall" role="list" aria-label="Badges de progreso"></div>
+      </section>
+
+      <section class="section" id="roadmap" aria-labelledby="roadmap-title">
+        <div class="section-kicker">Ruta 0-100</div>
+        <h2 id="roadmap-title">La curva de readiness del AM.</h2>
+        <p class="section-lede">La secuencia está diseñada para ir de "sé dónde hacer clic" a "puedo diagnosticar un merchant, sostener una conversación consultiva y defender una recomendación con datos".</p>
+
+        <div class="roadmap">
+          <div class="stage" data-step="0">
+            <b>0-20</b>
+            <h4>Toolbelt</h4>
+            <p>Reconocer cuándo usar Merchant Portal, SFDC, DDMx, Dime, Mint/Figment, Outreach y Slack.</p>
+          </div>
+          <div class="stage" data-step="20">
+            <b>20-40</b>
+            <h4>Merchant diagnosis</h4>
+            <p>Leer Product Mix, Operation Quality, Customer Insights, photos, ratings, sales trends y campaign reporting.</p>
+          </div>
+          <div class="stage" data-step="40">
+            <b>40-60</b>
+            <h4>Consultative call</h4>
+            <p>Abrir con valor, pedir permiso, hacer discovery, usar SPIN y confirmar next steps.</p>
+          </div>
+          <div class="stage" data-step="60">
+            <b>60-80</b>
+            <h4>Growth levers</h4>
+            <p>Elegir entre photos, descriptions, Sponsored Listings, promos, Smart Campaigns, Loyalty y dayparting.</p>
+          </div>
+          <div class="stage" data-step="80">
+            <b>80-100</b>
+            <h4>Floor simulation</h4>
+            <p>Resolver escenarios con objeciones, soporte, campañas y cierre sin romper QA ni confianza.</p>
+          </div>
+        </div>
+
+        <p class="pull">Un AM floor-ready no recita features: conecta una señal del negocio con una acción concreta y un next step claro.</p>
+      </section>
+
+      <section class="section" id="cards" aria-labelledby="cards-title">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Juego 1</div>
+            <h2 id="cards-title">Flashcards que se voltean.</h2>
+            <p class="section-lede">Conceptos base con nombre original y traducción práctica. Tocá cada tarjeta para ver cómo usarlo en llamada.</p>
+          </div>
+          <button class="btn secondary" id="flipAllBtn">Voltear todas</button>
+        </div>
+
+        <div class="flip-grid" id="conceptDeck"></div>
+      </section>
+
+      <section class="section" id="memory" aria-labelledby="memory-title">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Juego 2</div>
+            <h2 id="memory-title">Memoria: herramienta correcta, uso correcto.</h2>
+            <p class="section-lede">El objetivo es automatizar el mapa mental de recursos. No todo se resuelve con el mismo sistema ni con el mismo tipo de caso.</p>
+          </div>
+          <button class="btn accent" id="newMemory">Nuevo tablero</button>
+        </div>
+        <div class="game-status" aria-live="polite">
+          <span class="tag red">Matches: <b id="memoryMatches">0</b>/8</span>
+          <span class="tag teal">Intentos: <b id="memoryMoves">0</b></span>
+          <span class="tag honey">Bonus al completar</span>
+        </div>
+        <div class="memory-board" id="memoryBoard"></div>
+      </section>
+
+      <section class="section" id="quiz" aria-labelledby="quiz-title">
+        <div class="section-kicker">Juego 3</div>
+        <h2 id="quiz-title">Sprint Quiz tipo Kahoot.</h2>
+        <p class="section-lede">Preguntas rápidas sobre training week, playbook y campañas. La respuesta correcta importa, pero el feedback importa más.</p>
+
+        <div class="quiz-shell">
+          <div class="quiz-top">
+            <span id="quizCounter">Pregunta 1/1</span>
+            <span>Score: <b id="quizScore">0</b></span>
+          </div>
+          <div class="quiz-q" id="quizQuestion"></div>
+          <div class="answers" id="quizAnswers" role="radiogroup" aria-label="Opciones de respuesta"></div>
+          <div class="feedback" id="quizFeedback" role="status" aria-live="polite"></div>
+          <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+            <button class="btn accent" id="nextQuiz">Siguiente</button>
+            <button class="btn secondary" id="restartQuiz">Reiniciar quiz</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="dojo" aria-labelledby="dojo-title">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Juego 4</div>
+            <h2 id="dojo-title">Rejection Dojo: objeción vs acción recomendada.</h2>
+            <p class="section-lede">El AM practica la diferencia entre reaccionar, presionar y consultar. Una buena respuesta valida la preocupación, vuelve al dato y propone un micro-siguiente paso.</p>
+          </div>
+          <button class="btn accent" id="checkDojo">Revisar respuestas</button>
+        </div>
+
+        <div class="card">
+          <div id="dojoRows"></div>
+          <div class="feedback" id="dojoFeedback" role="status" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="section" id="cases" aria-labelledby="cases-title">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Juego 5</div>
+            <h2 id="cases-title">Score cards que se voltean.</h2>
+            <p class="section-lede">Cada restaurante es ficticio. Primero diagnosticá mentalmente. Después volteá la tarjeta y compará tu enfoque con una respuesta floor-ready.</p>
+          </div>
+          <button class="btn secondary" id="shuffleCases">Mezclar casos</button>
+        </div>
+        <div class="case-grid" id="caseGrid"></div>
+      </section>
+
+      <section class="section" id="campaign" aria-labelledby="campaign-title">
+        <div class="section-kicker">Juego 6</div>
+        <h2 id="campaign-title">Campaign Lab: elegí la palanca correcta.</h2>
+        <p class="section-lede">No todas las campañas resuelven el mismo problema. Este laboratorio fuerza al AM a diferenciar adquisición, retención, AOV, visibilidad, conversión y capacidad operativa.</p>
+
+        <div class="builder-grid">
+          <div class="card choice-stack">
+            <label class="field" for="campaignGoal">Objetivo principal del merchant
+              <select id="campaignGoal">
+                <option value="new">Conseguir nuevos clientes</option>
+                <option value="repeat">Traer clientes de vuelta / repeat orders</option>
+                <option value="aov">Subir average ticket size</option>
+                <option value="visibility">Mejorar visibilidad</option>
+                <option value="slow">Activar horas lentas</option>
+                <option value="conversion">Convertir mejor el tráfico actual</option>
+              </select>
+            </label>
+            <label class="field" for="campaignContext">Contexto
+              <select id="campaignContext">
+                <option value="missingPhotos">El menú tiene muchas fotos faltantes</option>
+                <option value="dashpass">El store está en DashPass / plan Plus o Premier</option>
+                <option value="busyDinner">Cena está saturada, lunch está lento</option>
+                <option value="budgetConcern">El merchant tiene preocupación por costo</option>
+                <option value="greatReviews">Buenas reviews, poca exposición</option>
+                <option value="lowOps">Operation Quality muestra fricciones</option>
+              </select>
+            </label>
+            <label class="field" for="campaignMerchant">Tipo de merchant ficticio
+              <select id="campaignMerchant">
+                <option>Maple Arepa House</option>
+                <option>Casa Verde Taqueria</option>
+                <option>Prairie Noodle Bar</option>
+                <option>North Shore Burgers</option>
+                <option>Sunrise Bagel Co.</option>
+                <option>Lotus Bowl Express</option>
+              </select>
+            </label>
+            <button class="btn accent" id="buildCampaign">Generar recomendación</button>
+          </div>
+          <div class="recommendation" id="campaignRec" aria-live="polite">
+            <span class="tag red">Recomendación</span>
+            <div class="rec-title">Seleccioná objetivo y contexto.</div>
+            <p>El resultado te dará una recomendación, la razón, un riesgo a validar y una pregunta de discovery.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="flow" aria-labelledby="flow-title">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Juego 7</div>
+            <h2 id="flow-title">Call Flow Builder.</h2>
+            <p class="section-lede">Ordená los pasos de una llamada consultiva. Esto entrena estructura: no vender antes de descubrir, no cerrar sin next step y no olvidar QA basics.</p>
+          </div>
+          <button class="btn accent" id="checkFlow">Revisar orden</button>
+        </div>
+        <div class="notice">Usá las flechas para mover pasos. En mobile funciona mejor que drag-and-drop.</div>
+        <div class="flow-list" id="flowList"></div>
+        <div class="flow-toolbar">
+          <button class="btn secondary small" id="reshuffleFlow">Mezclar de nuevo</button>
+        </div>
+        <div class="feedback" id="flowFeedback" role="status" aria-live="polite"></div>
+      </section>
+
+      <section class="section" id="roleplay" aria-labelledby="roleplay-title">
+        <div class="section-kicker">Juego 8</div>
+        <h2 id="roleplay-title">Mini roleplay: elegí la respuesta del AM.</h2>
+        <p class="section-lede">Este módulo simula momentos de llamada. La respuesta correcta no es la más "bonita"; es la que combina confianza, discovery, dato y siguiente acción.</p>
+
+        <div class="roleplay-shell">
+          <div class="card">
+            <label class="field" for="roleplaySelect">Escenario
+              <select id="roleplaySelect"></select>
+            </label>
+            <div style="margin-top:14px">
+              <span class="tag teal" id="roleplayTopic">Topic</span>
+              <span class="tag honey" id="roleplayDifficulty">Difficulty</span>
+            </div>
+          </div>
+          <div>
+            <div class="merchant-bubble" id="merchantLine" aria-live="polite"></div>
+            <div class="response-options" id="responseOptions"></div>
+            <div class="feedback" id="roleplayFeedback" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="scorecard" aria-labelledby="scorecard-title">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Readiness scorecard</div>
+            <h2 id="scorecard-title">Mapa individual de coaching.</h2>
+            <p class="section-lede">El AM se autoevalúa. El TL puede comparar este mapa con QA, shadowing y resultados reales. Lo importante no es el promedio: son los dos puntos más bajos.</p>
+          </div>
+          <button class="btn secondary" id="resetSliders">Reset sliders</button>
+        </div>
+
+        <div class="builder-grid">
+          <div class="slider-grid" id="sliderGrid"></div>
+          <div class="score-output">
+            <span class="tag red">Floor readiness</span>
+            <div class="big-score"><span id="readinessScore">0</span>%</div>
+            <p id="readinessText">Mové los sliders para ver tu diagnóstico.</p>
+            <ul class="priority-list" id="priorityList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="weekplan" aria-labelledby="weekplan-title">
+        <div class="section-kicker">Plan de práctica</div>
+        <h2 id="weekplan-title">Checklist 0-100 antes de entrar al floor.</h2>
+        <p class="section-lede">No es un plan de lectura. Es un plan de evidencia: cada check debe poder demostrarse en shadowing, roleplay o una conversación real.</p>
+
+        <div class="grid two">
+          <div class="card">
+            <h3>Semana de training: base</h3>
+            <div class="check-grid">
+              <label class="check-item"><input type="checkbox" data-check="w1_tools"><span><strong>Tool map:</strong> puedo explicar para qué uso Merchant Portal, SFDC, DDMx, Dime, Mint/Figment, Outreach y Slack.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w1_levels"><span><strong>Business vs Store level:</strong> sé cuándo una acción vive a nivel negocio y cuándo a nivel tienda.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w1_research"><span><strong>2-3 min pre-call:</strong> armo una agenda sin perderme investigando de más.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w1_metrics"><span><strong>Signals:</strong> leo Product Mix, Operation Quality, Customer Insights, Campaign Reporting y ratings.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w1_photos"><span><strong>Photo path:</strong> sé orientar photoshoot, photo processing o carga DIY según el caso.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w1_call"><span><strong>Opening:</strong> puedo abrir llamada con recorded line, valor y permiso sin sonar robótico.</span></label>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Semana de nesting: piso</h3>
+            <div class="check-grid">
+              <label class="check-item"><input type="checkbox" data-check="w2_spin"><span><strong>Discovery:</strong> hago preguntas SPIN antes de recomendar.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w2_campaigns"><span><strong>Campaign fit:</strong> diferencio Sponsored Listings, Promos, Smart Campaigns, Loyalty y dayparting.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w2_reject"><span><strong>Objections:</strong> respondo costo, competencia y desconfianza sin empujar de más.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w2_qa"><span><strong>QA basics:</strong> evito errores críticos, confirmo next steps y registro notas.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w2_pipeline"><span><strong>Pipeline hygiene:</strong> dejo follow-up accionable y no dependo de memoria.</span></label>
+              <label class="check-item"><input type="checkbox" data-check="w2_mock"><span><strong>Mock call:</strong> completé un roleplay de 10 minutos con feedback TL/SME.</span></label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="export" aria-labelledby="export-title">
+        <div class="section-title">
+          <div>
+            <div class="section-kicker">Handoff</div>
+            <h2 id="export-title">Resumen para compartir con el TL.</h2>
+            <p class="section-lede">El AM puede copiar este resumen después de practicar. Le da al TL una entrada directa para coaching personalizado.</p>
+          </div>
+          <button class="btn accent" id="generateReport">Generar resumen</button>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <label class="field" for="strengthNote">Mi mayor fortaleza observada
+              <textarea id="strengthNote" placeholder="Ej. Puedo conectar Product Mix con recomendaciones de AOV."></textarea>
+            </label>
+            <label class="field" for="frictionNote" style="margin-top:12px">Mi mayor fricción / tema para coaching
+              <textarea id="frictionNote" placeholder="Ej. Me cuesta responder objeciones de costo sin sonar defensivo."></textarea>
+            </label>
+            <label class="field" for="nextActionNote" style="margin-top:12px">Próxima acción que voy a practicar
+              <textarea id="nextActionNote" placeholder="Ej. Haré 3 roleplays usando SPIN + Feel-Felt-Found."></textarea>
+            </label>
+          </div>
+          <div class="card">
+            <label class="field" for="reportBox">Resumen generado
+              <textarea id="reportBox" placeholder="Tu reporte aparecerá aquí."></textarea>
+            </label>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+              <button class="btn secondary" id="copyReport">Copiar resumen</button>
+              <button class="btn ghost" id="resetAll">Reset completo</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Training companion interno con ejemplos ficticios. Usar junto con el playbook oficial, QA, shadowing y lineamientos actualizados del programa.
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">+XP</div>
+
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-box">
+      <h3 id="modalTitle">Título</h3>
+      <p id="modalBody">Mensaje</p>
+      <button class="btn accent" id="closeModal">Cerrar</button>
+    </div>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
